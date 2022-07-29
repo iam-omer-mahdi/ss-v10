@@ -10,6 +10,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">المدرسة</label>
                     <select name="school_id" id="school" class="form-select" required>
+                        <option value="0" disabled selected> - اختر المدرسة - </option>
                         @foreach ($schools as $school)
                             <option value="{{ $school->id }}">{{ $school->name }}</option>
                         @endforeach
@@ -29,6 +30,13 @@
                     @enderror
                 </div>
 
+                @foreach($fees as $fee)
+                    <div class="mb-3">
+                        <label for="amount_{{ $fee->type }}" class="form-label">{{ $fee->name }}</label>
+                        <input type="number" min="0" name="amount_{{ $fee->type }}" id="amount_{{ $fee->type }}" class="form-control" value="{{ old('amount_' . $fee->type) }}" required>
+                        <input type="hidden" name="fee_{{ $fee->type }}_id" value="{{ $fee->id }}" />
+                    </div>
+                @endforeach
                 <button class="btn btn-primary w-100">اضافة</button>
             </form>
         @else

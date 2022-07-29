@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Fee;
 use App\Models\Grade;
 use App\Models\School;
+use App\Models\GradeFee;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller 
@@ -17,20 +19,19 @@ class GradeController extends Controller
    */
   public function index()
   {
-    $grades = Grade::with('school')->get();
-    $schools = School::all();
-    return view('dashboard/grade/index', compact(['grades','schools']));
+    $grades = Grade::with('school')->orderBy('school_id')->get();
+    
+    return view('dashboard/grade/index', compact(['grades']));
   }
-
-
-  public function filter_by_school(Request $request)
+  // Get Grades by School id
+  public function getGrades($id)
   {
-    dd($request);
-    $grades = Grade::with('school')->where('school_id',$request->filter_grades)->get();
-    $schools = School::all();
+    $grades = Grade::where('school_id',$id)->get();
+    $school_id = $id;
 
-    return view('dashboard/grade/index', compact(['grades','schools']));
+    return response()->json($grades);
   }
+
 
   /**
    * Show the form for creating a new resource.
@@ -40,7 +41,9 @@ class GradeController extends Controller
   public function create()
   {
     $schools = School::all();
-    return view('dashboard/grade/create', compact('schools'));
+    $fees = Fee::all();
+
+    return view('dashboard/grade/create', compact(['schools','fees']));
   }
 
   /**
@@ -52,12 +55,28 @@ class GradeController extends Controller
   {
     $this->validate($request, [
       'name' => 'required|string',
-      'school_id' => 'required'
+      'school_id' => 'required',
+      'amount_1' => 'required',
+      'amount_2' => 'required',
+      'fee_1_id' => 'required',
+      'fee_2_id' => 'required'
     ]);
 
-    Grade::create([
-        'name' => $request->name,
-        'school_id' => $request->school_id,
+    $grade = Grade::create([
+      'name' => $request->name,
+      'school_id' => $request->school_id,
+    ]);
+
+    GradeFee::create([
+      'amount' => $request->amount_1,
+      'grade_id' => $grade->id,
+      'fee_id' => $request->fee_1_id
+    ]);
+
+    GradeFee::create([
+      'amount' => $request->amount_2,
+      'grade_id' => $grade->id,
+      'fee_id' => $request->fee_2_id
     ]);
 
     return redirect()->route('grade.index')->with('success','تمت الاضافة بنجاح');
@@ -84,10 +103,11 @@ class GradeController extends Controller
   public function edit($id)
   {
     $grade = Grade::findOrFail($id);
+    $fees = Fee::all();
 
     $schools = School::all();
 
-    return view('dashboard/grade/edit', compact(['grade','schools']));
+    return view('dashboard/grade/edit', compact(['grade','schools', 'fees']));
   }
 
   /**
@@ -100,6 +120,10 @@ class GradeController extends Controller
   {
     $grade = Grade::findOrFail($id);
     
+    $grade_fee_1 = GradeFee::where('id', $request->fee_1_id);
+    $grade_fee_2 = GradeFee::where('id', $request->fee_2_id);
+
+
     $this->validate($request, [
       'name' => 'required|string',
       'school_id' => 'required'
@@ -108,6 +132,18 @@ class GradeController extends Controller
     $grade->update([
         'name' => $request->name,
         'school_id' => $request->school_id,
+    ]);
+
+    $grade_fee_1->update([
+      'amount' => $request->amount_1,
+      'grade_id' => $grade->id,
+      'fee_id' => $request->fee_1_id
+    ]);
+
+    $grade_fee_2->update([
+      'amount' => $request->amount_2,
+      'grade_id' => $grade->id,
+      'fee_id' => $request->fee_2_id
     ]);
 
     return redirect()->route('grade.index')->with('success','تم التعديل بنجاح');

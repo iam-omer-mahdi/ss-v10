@@ -121,6 +121,8 @@ return [
     // Attr
     'attributes' => [
         'name' => 'الاسم',
+        'school_id' => 'المدرسة',
+        'grade_id' => 'الصف'
     ]
 ];
 

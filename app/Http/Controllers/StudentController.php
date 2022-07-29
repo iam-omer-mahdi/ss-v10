@@ -4,31 +4,49 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Student;
+use App\Models\Discount;
+use App\Models\GradeFee;
+use App\Models\Classroom;
+use App\Models\StudentFee;
+use App\Models\Nationality;
 use Illuminate\Http\Request;
+use App\Models\GuardianRelation;
 
 class StudentController extends Controller 
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
-  public function index()
+  
+  public function index(Request $request)
   {
-    $students = Student::all();
+    $classroom = Classroom::with('student')->findOrFail($request->id);
+    $students = $classroom->student;
 
-    return view('dashboard/student/index', compact('students'));
+    return view('dashboard/student/index', compact(['students','classroom']));
+  }
+
+  public function search(Request $request)
+  {
+
+    // dd($request->search);
+    $students = Student::with('classroom')->where('name','like', "%{$request->search}%")->get();
+    return view('dashboard/student/search', compact(['students']));
   }
 
   /**
    * Show the form for creating a new resource.
-   *
+   * 
    * @return Response
-   */
-  public function create()
+  */
+
+  public function create(Request $request)
   {
-    return view('dashboard/student/create');
+    
+    $discounts = Discount::all();
+    $classroom = Classroom::findOrFail($request->id);
+    $nationalities = Nationality::all();
+    $relations = GuardianRelation::all();
+
+    return view('dashboard/student/create', compact(['classroom','nationalities','relations','discounts']));
   }
 
   /**
@@ -38,6 +56,7 @@ class StudentController extends Controller
    */
   public function store(Request $request)
   {
+
     $this->validate($request, [
       'name' => 'required|string',
       'address' => 'string|nullable',
@@ -51,14 +70,15 @@ class StudentController extends Controller
       'mother_f_phone' => 'required', 
       'mother_s_phone' => 'nullable',
       'classroom_id' => 'required',
+      'discount' => 'nullable',
     ]);
 
-    Student::create([
+    $student = Student::create([
       'name'  => $request->name,
       'address'  => $request->address,
-      'nationality'  => $request->nationality,
+      'nationality_id'  => $request->nationality,
       'guardian'  => $request->guardian,
-      'guardian_relation'  => $request->guardian_relation,
+      'guardian_relation_id'  => $request->guardian_relation,
       'guardian_workplace'  => $request->guardian_workplace,
       'guardian_f_phone'  => $request->guardian_f_phone,
       'guardian_s_phone'  => $request->guardian_s_phone,
@@ -66,9 +86,21 @@ class StudentController extends Controller
       'mother_f_phone'  => $request->mother_f_phone,
       'mother_s_phone'  => $request->mother_s_phone,
       'classroom_id'  => $request->classroom_id,
+      'discount_id'  => $request->discount,
     ]);
+    // Student Fees
 
-    return redirect()->route('student.index')->with('success','تمت الاضافة بنجاح');
+    // $grade_fees = GradeFee::where('grade_id',$student->classroom->grade->id)->get();
+    
+    // foreach ($grade_fees as $grade_fee) {
+    //   dd($grade_fee);
+    //   StudentFee::create([
+    //     'grade_fee_id' => $grade_fee->id,
+    //     'student_id' => $student->id
+    //   ]);
+    // }
+
+    return redirect()->back()->with('success','تمت الاضافة بنجاح');
   }
 
   /**
@@ -79,7 +111,9 @@ class StudentController extends Controller
    */
   public function show($id)
   {
-    
+    $student = Student::with(['classroom','grade.grade_fee','discount','nationality','guardian_relation'])->findOrFail($id);
+
+    return view('dashboard/student/show', compact(['student']));
   }
 
   /**
@@ -90,9 +124,13 @@ class StudentController extends Controller
    */
   public function edit($id)
   {
-    $student = Student::findOrFail($id);
+    $student = Student::findOrFail($id);    
     
-    return view('dashboard/student/edit', compact('student'));
+    $discounts = Discount::all();
+    $nationalities = Nationality::all();
+    $relations = GuardianRelation::all();
+
+    return view('dashboard/student/edit', compact(['student','nationalities','relations','discounts']));
   }
 
   /**
@@ -118,24 +156,26 @@ class StudentController extends Controller
       'mother_f_phone' => 'required', 
       'mother_s_phone' => 'nullable',
       'classroom_id' => 'required',
+      'discount_id' => 'nullable',
     ]);
 
     $student->update([
       'name'  => $request->name,
       'address'  => $request->address,
-      'nationality'  => $request->nationality,
+      'nationality_id'  => $request->nationality,
       'guardian'  => $request->guardian,
-      'guardian_relation'  => $request->guardian_relation,
-      'guardian_workplace'  => $request->guardian_workplace,
+      'guardian_relation_id'  => $request->guardian_relation,
+      'guardian_workplace'  => $request->workplace,
       'guardian_f_phone'  => $request->guardian_f_phone,
       'guardian_s_phone'  => $request->guardian_s_phone,
       'mother_name'  => $request->mother_name,
       'mother_f_phone'  => $request->mother_f_phone,
       'mother_s_phone'  => $request->mother_s_phone,
       'classroom_id'  => $request->classroom_id,
+      'discount_id'  => $request->discount,
     ]);
 
-    return redirect()->route('student.index')->with('success','تم التعديل بنجاح');
+    return redirect()->route('student.show', $student->id)->with('success','تم التعديل بنجاح');
   }
 
   /**
@@ -150,7 +190,7 @@ class StudentController extends Controller
     
     if ($student) {
       $student->delete();
-      return redirect()->route('student.index')->with('success','تم الحذف بنجاح');
+      return redirect()->route('student.index', ['id' => $student->classroom_id])->with('success','تم الحذف بنجاح');
     }
   }
   

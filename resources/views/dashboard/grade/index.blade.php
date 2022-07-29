@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('table').DataTable({
@@ -230,18 +230,9 @@
     <div class="container">
         <header class="d-flex justify-content-between">
             <h1 class="h5">الصفوف</h1>
-            <a href="{{ route('grade.create') }}" class="btn btn-primary btn-sm">اضافة</a>
+            <a href="{{ route('grade.create') }}" class="btn btn-primary btn-sm">اضافة صف</a>
         </header>
-        {{-- Filter --}}
-        <form action="{{ route('grade.filter') }}" method="GET" class="input-group mt-3">
-            <label for="filter_grades" class="form-label">المدرسة</label>
-            <select name="filter_grades" id="filter_grades" class="form-select ms-4">
-                @foreach($schools as $school)
-                    <option value="{{ $school->id }}">{{ $school->name }}</option>
-                @endforeach
-            </select>
-            <button class="btn btn-primary" type="submit" id="button-addon1">فرز</button>
-        </form>
+        
         {{-- DataTable  --}}
         <div class="table-responsive mt-4 shadow-sm p-3 bg-white">
             <table class="table table-default middle-align mb-0">
@@ -259,11 +250,25 @@
                                 <td>{{ $grade->school->name }}</td>
                                 <td>{{ $grade->name }}</td>
                                 <td class="d-flex gap-2 justify-content-center">
-                                    <a href="{{ route('grade.edit', $grade->id) }}" class="btn btn-sm btn-warning">تعديل</a>
+                                    <a title="عرض" class="btn btn-success btn-sm" href="{{ route('class.index', ['id' => $grade->id]) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
+                                    <a title="تعديل" href="{{ route('grade.edit', $grade->id) }}" class="btn btn-sm btn-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                    </a>
                                     <form action="{{ route('grade.destroy', $grade->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                        <button title="حذف" type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل انت متاكد؟ سيتم حذف جميع الفصول التابعة لهذا الصف')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
