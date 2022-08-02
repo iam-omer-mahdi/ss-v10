@@ -229,7 +229,7 @@
 @section('content')
     <div class="container">
         <header class="d-flex justify-content-between">
-            <h1 class="h5">{{ $classroom->grade->school->name }} / {{ $classroom->grade->name }} / {{ $classroom->name }}</h1>
+            <h1 class="h5">  <a class="text-primary text-decoration-none" href="{{ route('grade.index', ) }}">{{ $classroom->grade->school->name }} </a> /  <a class="text-primary text-decoration-none" href="{{ route('class.index', ['id' => $classroom->grade_id]) }}">{{ $classroom->grade->name }}</a> / {{ $classroom->name }}</h1>
             <a class="btn btn-primary btn-sm" href="{{ route('student.create', ['id' => $classroom->id]) }}">اضافة طلاب</a>
         </header>
 

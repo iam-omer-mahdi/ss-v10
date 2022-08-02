@@ -122,7 +122,12 @@ return [
     'attributes' => [
         'name' => 'الاسم',
         'school_id' => 'المدرسة',
-        'grade_id' => 'الصف'
+        'grade_id' => 'الصف',
+        'nationality' => 'الجنسية',
+        'guardian_relation' => 'صلة القرابة',
+        'guardian_f_phone' => 'هاتف ولي الامر',
+        'mother_name' => 'اسم الوالدة',
+        'mother_f_phone' => 'هاتف الوالدة',
     ]
 ];
 

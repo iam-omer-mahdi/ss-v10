@@ -229,7 +229,8 @@
 @section('content')
     <div class="container">
         <header class="d-flex justify-content-between">
-            <h1 class="h5">{{ $grade->school->name }} / {{ $grade->name }}</h1>
+            <h1 class="h5"> <a class="text-primary text-decoration-none" href="{{ route('grade.index') }}">{{ $grade->school->name }}</a> / {{ $grade->name }}</h1>
+            
             <a class="btn btn-primary btn-sm" href="{{ route('class.create', ['id' => $grade->id]) }}">اضافة فصل</a>
         </header>
 

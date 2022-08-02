@@ -21,6 +21,7 @@ class CreateStudentsTable extends Migration {
 			$table->foreignId('discount_id')->nullable();
 			$table->foreignId('nationality_id');
 			$table->foreignId('guardian_relation_id');
+			$table->boolean('no_payment')->nullable();
 			$table->foreignId('classroom_id')->constrained()->onDelete('cascade');
 			$table->softDeletes();
 			$table->timestamps();

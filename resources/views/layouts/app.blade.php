@@ -62,6 +62,9 @@
                                     <li><a class="dropdown-item" href="{{ route('discount.index') }}">التخفيضات</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.index') }}" class="nav-link">التقارير</a>
+                            </li>
                         </ul>
 
                         <ul class="navbar-nav ms-auto">
@@ -95,6 +98,13 @@
                 <div class="container">
                     <div class="alert alert-success" style="cursor: pointer" onclick="this.style.display = 'none'">
                         {{ Session()->get('success') }}
+                    </div>
+                </div>
+            @endif
+            @if (Session()->has('error'))
+                <div class="container">
+                    <div class="alert alert-error" style="cursor: pointer" onclick="this.style.display = 'none'">
+                        {{ Session()->get('error') }}
                     </div>
                 </div>
             @endif

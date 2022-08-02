@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\StudentPartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
- 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('school', SchoolController::class);
     Route::resource('grade', GradeController::class);
@@ -36,4 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('student/search', [StudentController::class, 'search'])->name('student.search');
     Route::resource('discount', DiscountController::class);
     Route::resource('fee', FeeController::class);
+    Route::resource('part', StudentPartController::class);
+    Route::get('part/payment/{id}', [StudentPartController::class, 'paymentPage'])->name('part.paymentPage');
+    Route::put('part/pay/{id}', [StudentPartController::class, 'pay'])->name('part.pay');
+    Route::get('part/receipt/{id}', [StudentPartController::class, 'receipt'])->name('part.receipt');
+    Route::get('report', [ReportController::class, 'index'])->name('report.index');
+    Route::post('report', [ReportController::class, 'report'])->name('report.report');
 });

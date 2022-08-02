@@ -6,7 +6,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
             </svg>
-            {{ $student->grade->school->name }} / {{ $student->grade->name }} / {{ $student->classroom->name }}</span>
+            {{ $student->grade->school->name }} / <a class="text-primary text-decoration-none" href="{{ route('class.index', ['id' => $student->classroom->grade_id]) }}"> {{ $student->grade->name }} </a> / <a class="text-primary text-decoration-none" href="{{ route('student.index', ['id' => $student->classroom_id]) }}"> {{ $student->classroom->name }} </a> </span>
         <h1 class="h5 mb-4 text-primary fw-bold d-flex justify-content-between">
            <span class="d-flex gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -88,20 +88,62 @@
     
             <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
                 <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">التخفيض</li>
-                @if(!empty($student->discount->name))<li class="list-group-item border-0 border-bottom col-9">{{ $student->discount->name }} - {{ $student->discount->amount }}%</li>@endif
+                <li class="list-group-item border-0 border-bottom col-9">@if(!empty($student->discount->name)) {{ $student->discount->name }} - {{ $student->discount->amount }}%  @endif</li>
             </ul>
 
             @foreach($student->grade->grade_fee as $student_fee)
-                <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                    <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">{{ $student_fee->fee->name }}</li>
-                    @if($student_fee->fee->type == 2)
-                        <li class="list-group-item border-0 border-bottom col-9"> {{ $student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount }} </li>
-                    @else
-                        <li class="list-group-item border-0 border-bottom col-9"> {{ $student_fee->amount }} </li>
+            <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
+                <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">{{ $student_fee->fee->name }}</li>
+                        @if($student_fee->fee->type == 2)
+                            <li class="list-group-item border-0 border-bottom col-9">
+                                @if($student->no_payment == 0)
+                                    {{ $student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount }} 
+                                @endif
+                            </li>
+                        @else
+                            <li class="list-group-item border-0 border-bottom col-9"> 
+                                @if($student->no_payment == 0)
+                                    {{ $student_fee->amount }} 
+                                @endif
+                            </li>
+                        @endif
+                    </ul>
+                @endforeach
+
+            <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
+                <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المدفوعة</li>
+                <li class="list-group-item border-0 border-bottom col-9">
+                    @if($student->no_payment == 0)
+                        {{ $total_paid_amount }}
                     @endif
-                </ul>
-            @endforeach
+                </li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
+                <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المتبقية</li>
+                <li class="list-group-item border-0 border-bottom col-9">
+                    @if($student->no_payment == 0)
+                        {{ $total_remaining_amount }}
+                    @endif
+                </li>
+            </ul>
 
         </div>
+        @if($student->no_payment == 0)
+            <div class="d-flex gap-4 mt-4">
+                <a href="{{ route('part.paymentPage', $student->id) }}" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    دفع
+                </a>
+                <a href="{{ route('part.index', ['id' => $student->id]) }}" class="btn btn-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    تعديل الاقساط
+                </a>
+            </div>
+        @endif
     </div>
 @endsection

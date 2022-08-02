@@ -2,8 +2,11 @@
 
 @section('content')
 <div class="container">
-   <h1 class="h4 mb-4">تعديل طالب</h1>
-   
+   <div class="d-flex justify-content-between align-items-center">
+      <h1 class="h4 mb-4">تعديل طالب</h1>
+      <a class="btn btn-sm btn-secondary px-4" href="{{ route('student.show', $student->id) }}">رجوع</a>
+   </div>   
+
    <form action="{{ route('student.update', $student->id) }}" method="POST" class="card shadow-sm p-4">
       @csrf
       @method('PUT')

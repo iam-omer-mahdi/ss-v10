@@ -9,8 +9,10 @@ use App\Models\GradeFee;
 use App\Models\Classroom;
 use App\Models\StudentFee;
 use App\Models\Nationality;
+use App\Models\StudentPart;
 use Illuminate\Http\Request;
 use App\Models\GuardianRelation;
+use App\Models\Fee;
 
 class StudentController extends Controller 
 {
@@ -86,42 +88,81 @@ class StudentController extends Controller
       'mother_f_phone'  => $request->mother_f_phone,
       'mother_s_phone'  => $request->mother_s_phone,
       'classroom_id'  => $request->classroom_id,
+      'no_payment' => $request->no_payment,
       'discount_id'  => $request->discount,
     ]);
-    // Student Fees
 
-    // $grade_fees = GradeFee::where('grade_id',$student->classroom->grade->id)->get();
     
-    // foreach ($grade_fees as $grade_fee) {
-    //   dd($grade_fee);
-    //   StudentFee::create([
-    //     'grade_fee_id' => $grade_fee->id,
-    //     'student_id' => $student->id
-    //   ]);
-    // }
+    if (!$request->has('no_payment')) { // check if student is payment free
+      
+      $grade_fee = GradeFee::where('grade_id', $student->grade->id)->whereHas('fee', function($q){
+        $q->where('type', '=', 2);
+      })->first();
 
+      $registration_fee = GradeFee::where('grade_id', $student->grade->id)->whereHas('fee', function($q){
+        $q->where('type', '=', 1);
+      })->first();
+
+      $student_fee = $grade_fee->amount - ($student->discount->amount / 100) * $grade_fee->amount;
+
+      // Reg Fee
+      StudentPart::create([
+        'part_number' => 4,
+        'type' => 1,
+        'amount' => $registration_fee->amount,
+        'student_id' => $student->id,
+      ]);
+
+      // Student FeesParts
+      StudentPart::create([
+        'part_number' => 1,
+        'type' => 2,
+        'amount' => $student_fee * 0.5,
+        'student_id' => $student->id,
+      ]);
+
+      StudentPart::create([
+        'part_number' => 2,
+        'type' => 2,
+        'amount' => $student_fee * 0.25,
+        'student_id' => $student->id,
+      ]);
+
+      StudentPart::create([
+        'part_number' => 3,
+        'type' => 2,
+        'amount' => $student_fee * 0.25,
+        'student_id' => $student->id,
+      ]);
+    }
     return redirect()->back()->with('success','تمت الاضافة بنجاح');
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
+  
   public function show($id)
   {
     $student = Student::with(['classroom','grade.grade_fee','discount','nationality','guardian_relation'])->findOrFail($id);
 
-    return view('dashboard/student/show', compact(['student']));
+    $total_paid = StudentPart::where('student_id', $student->id)->where('paid', '=', 1)->get();
+    $total_paid_amount = 0;
+    if ($total_paid->count() > 0) {
+      foreach ($total_paid as $paid) {
+        $total_paid_amount = $paid->amount + $total_paid_amount;
+      }
+    }
+
+    $total_remaining = StudentPart::where('student_id', $student->id)->where('paid', '=', 0)->get();
+    $total_remaining_amount = 0;
+    if ($total_remaining->count() > 0) {
+      foreach ($total_remaining as $remaining) {
+        $total_remaining_amount = $remaining->amount + $total_remaining_amount;
+      }
+    }
+
+    return view('dashboard/student/show', compact(['student','total_paid_amount','total_remaining_amount']));
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
+  
   public function edit($id)
   {
     $student = Student::findOrFail($id);    
@@ -133,12 +174,7 @@ class StudentController extends Controller
     return view('dashboard/student/edit', compact(['student','nationalities','relations','discounts']));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
+  
   public function update(Request $request, $id)
   {
     $student = Student::findOrFail($id);
@@ -172,18 +208,64 @@ class StudentController extends Controller
       'mother_f_phone'  => $request->mother_f_phone,
       'mother_s_phone'  => $request->mother_s_phone,
       'classroom_id'  => $request->classroom_id,
+      'no_payment' => $request->no_payment,
       'discount_id'  => $request->discount,
     ]);
+
+    // Edit Parts If Discount Updated
+    if ($student->wasChanged('discount_id')) {
+      // Delete Old Parts
+      $parts = StudentPart::where('student_id',$student->id)->get();
+
+      foreach ($parts as $part) {
+        $part->delete();
+      }
+
+      // Create New Parts According To New Discount
+      $grade_fee = GradeFee::where('grade_id', $student->grade->id)->whereHas('fee', function($q){
+        $q->where('type', '=', 2);
+      })->first();
+  
+      $registration_fee = GradeFee::where('grade_id', $student->grade->id)->whereHas('fee', function($q){
+        $q->where('type', '=', 1);
+      })->first();
+  
+      $student_fee = $grade_fee->amount - ($student->discount->amount / 100) * $grade_fee->amount;
+  
+      // Reg Fee
+      StudentPart::create([
+        'part_number' => 4,
+        'type' => 1,
+        'amount' => $registration_fee->amount,
+        'student_id' => $student->id,
+      ]);
+  
+      // Student FeesParts
+      StudentPart::create([
+        'part_number' => 1,
+        'type' => 2,
+        'amount' => $student_fee * 0.5,
+        'student_id' => $student->id,
+      ]);
+  
+      StudentPart::create([
+        'part_number' => 2,
+        'type' => 2,
+        'amount' => $student_fee * 0.25,
+        'student_id' => $student->id,
+      ]);
+  
+      StudentPart::create([
+        'part_number' => 3,
+        'type' => 2,
+        'amount' => $student_fee * 0.25,
+        'student_id' => $student->id,
+      ]);
+    }
 
     return redirect()->route('student.show', $student->id)->with('success','تم التعديل بنجاح');
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
   public function destroy($id)
   {
     $student = Student::findOrFail($id);

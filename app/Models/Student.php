@@ -6,6 +6,7 @@ use App\Models\Discount;
 use App\Models\Classroom;
 use App\Models\StudentFee;
 use App\Models\Nationality;
+use App\Models\StudentPart;
 use App\Models\GuardianRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,7 +22,7 @@ class Student extends Model
     use SoftDeletes, HasFactory;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('classroom_id', 'name', 'address', 'nationality_id', 'guardian', 'guardian_relation_id', 'guardian_workplace', 'guardian_f_phone', 'guardian_s_phone', 'mother_name', 'mother_f_phone', 'mother_s_phone','discount_id');
+    protected $fillable = array('classroom_id', 'name', 'address', 'nationality_id', 'guardian', 'guardian_relation_id', 'guardian_workplace', 'guardian_f_phone', 'guardian_s_phone', 'mother_name', 'mother_f_phone', 'mother_s_phone','no_payment','discount_id');
 
     public function classroom()
     {
@@ -47,6 +48,11 @@ class Student extends Model
     public function grade()
     {
         return $this->belongsToThrough(Grade::class, Classroom::class);
+    }
+
+    public function student_part()
+    {
+        return $this->hasMany(StudentPart::class);
     }
 
 }

@@ -11,21 +11,17 @@ use Database\Seeders\GuardianRelationSeeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
+    
     public function run()
     {
-        Student::factory()->count(160)->create();
+        // Student::factory()->count(160)->create();
         
-        // $this->call([
-        //     UserSeeder::class,
-        //     GuardianRelationSeeder::class,
-        //     NationalitySeeder::class,
-        //     DiscountSeeder::class,
-        //     FeeSeeder::class,
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            GuardianRelationSeeder::class,
+            NationalitySeeder::class,
+            DiscountSeeder::class,
+            FeeSeeder::class,
+        ]);
     }
 }

@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-   <h1 class="h4 mb-4">اضافة طالب</h1>
+   <div class="d-flex justify-content-between align-items-center">
+      <h1 class="h4 mb-4">اضافة طالب</h1>
+      <a class="btn btn-sm btn-secondary px-4" href="{{ route('student.index', ['id' => $classroom->id]) }}">رجوع</a>
+   </div>   
    
    <form action="{{ route('student.store') }}" method="POST" class="card shadow-sm p-4">
       @csrf
@@ -58,9 +61,9 @@
             @enderror
          </div>
          <div class="col-md-4">
-            <label for="workplace" class="form-label">مكان العمل</label>
-            <input type="text" name="workplace" id="workplace" value="{{ old('workplace') }}" class="form-control" />
-            @error('workplace')
+            <label for="guardian_workplace" class="form-label">مكان العمل</label>
+            <input type="text" name="guardian_workplace" id="guardian_workplace" value="{{ old('guardian_workplace') }}" class="form-control" />
+            @error('guardian_workplace')
                <span class="text-danger">{{ $message }}</span>
             @enderror
          </div>
@@ -120,9 +123,17 @@
          </select>
       </div>
 
+      <div class="form-check">
+         <input class="form-check-input" type="checkbox" value="1" name="no_payment" id="flexCheckDefault">
+         <label class="form-check-label" for="flexCheckDefault">
+           معفي من الرسوم
+         </label>
+       </div>
+       
+
       <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
 
-      <button type="submit" class="btn btn-primary mt-3">اضافة</button>
+      <button type="submit" class="btn btn-primary mt-4">اضافة</button>
 
    </form>
    
