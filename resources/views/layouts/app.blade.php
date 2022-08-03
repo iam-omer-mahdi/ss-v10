@@ -103,7 +103,7 @@
             @endif
             @if (Session()->has('error'))
                 <div class="container">
-                    <div class="alert alert-error" style="cursor: pointer" onclick="this.style.display = 'none'">
+                    <div class="alert alert-danger" style="cursor: pointer" onclick="this.style.display = 'none'">
                         {{ Session()->get('error') }}
                     </div>
                 </div>

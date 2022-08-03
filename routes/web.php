@@ -43,4 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('part/receipt/{id}', [StudentPartController::class, 'receipt'])->name('part.receipt');
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
     Route::post('report', [ReportController::class, 'report'])->name('report.report');
+    Route::post('report/get_grades', [ReportController::class, 'getGrades'])->name('report.getGrades');
+    Route::post('report/get_classes', [ReportController::class, 'getClasses'])->name('report.getClasses');
+
 });

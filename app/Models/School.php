@@ -38,9 +38,9 @@ class School extends Model
                'classroom_id', // Foreign key on the "students" table.
             ],
             [
-                'id', // Local key on the "grade" table.
-              'id', // Local key on the "classroom" table.
-              'id'  // Local key on the "students" table.
+               'id', // Local key on the "grade" table.
+               'id', // Local key on the "classroom" table.
+               'id'  // Local key on the "students" table.
             ]
         );
     }

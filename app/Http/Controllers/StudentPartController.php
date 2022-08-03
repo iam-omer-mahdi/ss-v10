@@ -43,7 +43,20 @@ class StudentPartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $part_count = StudentPart::where('student_id', $request->student_id)->count();
+        
+        $this->validate($request, [
+            'student_id' => 'required',
+        ]);
+
+        StudentPart::create([
+            'part_number' => $part_count + 1,
+            'type' => 2,
+            'amount' => 0,
+            'student_id' => $request->student_id
+        ]);
+
+        return redirect()->back()->with('success','تمت الاضافة بنجاح');
     }
 
     /**
@@ -85,44 +98,31 @@ class StudentPartController extends Controller
     public function update(Request $request, $id)
     {
 
-        $student = Student::find($id);
-
         $this->validate($request, [
-            'part_1' => 'required',
-            'part_2' => 'required',
-            'part_3' => 'required',
-            'part_1_id' => 'required',
-            'part_2_id' => 'required',
-            'part_3_id' => 'required',
-        ]);
-
-        $student = $request->student_id;
+            'part_number' => 'required',
+            'part_id' => 'required',
+        ]); 
 
         $total = StudentPart::where([
-            ['student_id', '=', $student],
+            ['student_id', '=', $request->student_id],
             ['type', '=', 2],
         ])->sum('amount');
         
+        $parts_total = 0;
 
-        
-        $parts_total = $request->part_1 + $request->part_2 + $request->part_3;
-        
+        foreach ($request->part_number as  $part) {
+            $parts_total += $part;
+        }
+
         if ($total != $parts_total) {
-            throw ValidationException::withMessages(['part_1' => 'يجب ان يكون المجموع ' . $total]);
+            throw ValidationException::withMessages(['part_number' => 'يجب ان يكون المجموع ' . $total]);
         }
             
-
-        StudentPart::find($request->part_1_id)->update([
-            'amount' => $request->part_1,
-        ]);
-
-        StudentPart::find($request->part_2_id)->update([
-            'amount' => $request->part_2,
-        ]);
-
-        StudentPart::find($request->part_3_id)->update([
-            'amount' => $request->part_3,
-        ]);
+        foreach ($request->part_id as $index => $part) {
+            StudentPart::find($part)->update([
+                'amount' => $request->part_number[$index],
+            ]);    
+        }
 
         return redirect()->back()->with('success','تم التعديل بنجاح');
     }
@@ -189,8 +189,15 @@ class StudentPartController extends Controller
      * @param  \App\Models\StudentPart  $studentPart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudentPart $studentPart)
+    public function destroy($id)
     {
-        //
+        $part = StudentPart::findOrFail($id);
+        
+        if ($part->amount > 0) {
+            return redirect()->back()->with('error','يجب ان تكون قيمة القسط 0 ليتم حذفه ');
+        } else {
+            $part->delete();
+            return redirect()->back()->with('success','تم حذف القسط بنجاح');
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\Classroom;
@@ -22,7 +23,7 @@ class ReportController extends Controller
         } else if($request->report_type == 2) {
             return (new ReportController)->student_report();
         } else if($request->report_type == 3) {
-            return (new ReportController)->student_payment_report();
+            return (new ReportController)->student_payment_report($request);
         }
     }
 
@@ -40,11 +41,26 @@ class ReportController extends Controller
         return view('dashboard/report/student_report')->with(['classrooms' => $classrooms]);
     }
 
-    public function student_payment_report()
+    public function student_payment_report($request)
     {
-        $students = Student::with(['grade.school','classroom','student_part'])->select('id','name','classroom_id')->orderBy('classroom_id')->get();
+
+        $students = Student::with(['grade.school','discount','classroom','student_part'])->select('id','name','classroom_id','discount_id')->where(['classroom_id' => $request->classroom])->orderBy('name')->get();
 
         return view('dashboard/report/student_payment_report')->with(['students' => $students]);
+    }
+
+    public function getGrades(Request $request)
+    {
+        $grades = Grade::where('school_id', $request->id)->get();
+
+        return response()->json($grades);
+    }
+
+    public function getClasses(Request $request)
+    {
+        $classrooms = Classroom::where('grade_id', $request->id)->get();
+
+        return response()->json($classrooms);
     }
 
 }

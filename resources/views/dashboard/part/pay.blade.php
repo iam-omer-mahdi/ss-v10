@@ -16,11 +16,11 @@
                 @foreach($student->grade->grade_fee as $student_fee)
                     <div class="col-6">
                         <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                            <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">{{ $student_fee->fee->name }}</li>
+                            <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">{{ $student_fee->fee->name }}</li>
                             @if($student_fee->fee->type == 2)
-                            <li class="list-group-item border-0 border-bottom col-9"> {{ number_format($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount) }} </li>
+                            <li class="list-group-item border-0 border-bottom col-6 col-md-8"> {{ number_format($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount) }} </li>
                             @else
-                            <li class="list-group-item border-0 border-bottom col-9"> {{ number_format($student_fee->amount) }} </li>
+                            <li class="list-group-item border-0 border-bottom col-6 col-md-8"> {{ number_format($student_fee->amount) }} </li>
                             @endif
                         </ul>
                     </div>
@@ -30,16 +30,16 @@
             <div class="row">
                 <div class="col-6">
                     <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                        <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المتبقية</li>
-                        <li class="list-group-item border-0 border-bottom col-9">
+                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">الرسوم المتبقية</li>
+                        <li class="list-group-item border-0 border-bottom col-6 col-md-8">
                             {{ number_format($total_remaining_amount) }}
                         </li>
                     </ul>
                 </div>                
                 <div class="col-6">
                     <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                        <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المدفوعة</li>
-                        <li class="list-group-item border-0 border-bottom col-9">
+                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">الرسوم المدفوعة</li>
+                        <li class="list-group-item border-0 border-bottom col-6 col-md-8">
                             {{ number_format($total_paid_amount) }}
                         </li>
                     </ul>
@@ -155,7 +155,7 @@
                         @if($part->payment_type == 2)
                             <p class="mb-3"> <strong>طريقة الدفع :</strong>  تحويل بنكي</p>
                             <span class="d-block mb-3">الاشعار :</span>
-                            <img src="{{ asset('images/payment/' . $part->payment_image) }}" alt="" width="100%">
+                            <img src="{{ asset('images/payment/' . $part->payment_image) }}" alt="" width="auto" height="auto">
                         @endif
                         @if($part->payment_type == 3)
                             <p> <strong>طريقة الدفع :</strong>  شيك</p>
