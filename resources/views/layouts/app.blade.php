@@ -52,19 +52,20 @@
                                 <a href="{{ route('grade.index') }}" class="nav-link">الصفوف</a>
                             </li>
 
+                            @role(['super_admin','finance_manager','accountant','requireAll'])
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     الرسوم
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- <li><a class="dropdown-item" href="{{ route('fee.index') }}">الرسوم</a></li> --}}
                                     <li><a class="dropdown-item" href="{{ route('discount.index') }}">التخفيضات</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('report.index') }}" class="nav-link">التقارير</a>
                             </li>
+                            @endrole
                         </ul>
 
                         <ul class="navbar-nav ms-auto">
@@ -75,6 +76,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                                        المستخدمين
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">

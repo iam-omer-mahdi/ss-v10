@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Fee;
 use App\Models\Student;
 use App\Models\Discount;
 use App\Models\GradeFee;
@@ -12,12 +13,20 @@ use App\Models\Nationality;
 use App\Models\StudentPart;
 use Illuminate\Http\Request;
 use App\Models\GuardianRelation;
-use App\Models\Fee;
+use Illuminate\Support\Facades\File;
 
 class StudentController extends Controller 
 {
 
-  
+  // Permissions -------------------
+  public function __construct()
+  {
+    $this->middleware(['permission:Student-read'])->only('index');
+    $this->middleware(['permission:Student-create'])->only(['store','create']);
+    $this->middleware(['permission:Student-update'])->only(['update','edit']);
+    $this->middleware(['permission:Student-delete'])->only('destroy');
+  }
+
   public function index(Request $request)
   {
     $classroom = Classroom::with('student')->findOrFail($request->id);
@@ -218,7 +227,12 @@ class StudentController extends Controller
       $parts = StudentPart::where('student_id',$student->id)->get();
 
       foreach ($parts as $part) {
+        $image_path = "images/payment/". $part->payment_image;
+        if(File::exists($image_path)) {
+          File::delete($image_path);
+        }
         $part->delete();
+
       }
 
       // Create New Parts According To New Discount

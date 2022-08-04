@@ -155,7 +155,7 @@
                         @if($part->payment_type == 2)
                             <p class="mb-3"> <strong>طريقة الدفع :</strong>  تحويل بنكي</p>
                             <span class="d-block mb-3">الاشعار :</span>
-                            <img src="{{ asset('images/payment/' . $part->payment_image) }}" alt="" width="auto" height="auto">
+                            <img src="{{ asset('images/payment/' . $part->payment_image) }}" alt="" width="100%" height="auto">
                         @endif
                         @if($part->payment_type == 3)
                             <p> <strong>طريقة الدفع :</strong>  شيك</p>

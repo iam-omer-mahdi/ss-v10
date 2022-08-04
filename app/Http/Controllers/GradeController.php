@@ -12,11 +12,15 @@ use Illuminate\Http\Request;
 class GradeController extends Controller 
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
+  // Permissions -------------------
+  public function __construct()
+  {
+    $this->middleware(['permission:Grade-read'])->only('index');
+    $this->middleware(['permission:Grade-create'])->only(['store','create']);
+    $this->middleware(['permission:Grade-update'])->only(['update','edit']);
+    $this->middleware(['permission:Grade-delete'])->only('destroy');
+  }
+
   public function index()
   {
     $grades = Grade::with('school')->orderBy('school_id')->get();

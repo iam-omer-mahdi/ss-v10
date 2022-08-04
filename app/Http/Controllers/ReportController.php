@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    // Permissions -------------------
+    public function __construct()
+    {
+        $this->middleware(['role:super_admin|finance_manager|accountant']);
+    }
+
     public function index()
     {
         $schools = School::all();

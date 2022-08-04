@@ -9,32 +9,29 @@ use Illuminate\Http\Request;
 class SchoolController extends Controller 
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
-  public function index()
+  // Permissions -------------------
+  public function __construct()
   {
+    $this->middleware(['permission:School-read'])->only('index');
+    $this->middleware(['permission:School-create'])->only(['store','create']);
+    $this->middleware(['permission:School-update'])->only(['update','edit']);
+    $this->middleware(['permission:School-delete'])->only('destroy');
+  }
+
+  // School Page with school list
+  public function index()
+  {    
     $schools = School::all();
     return view('dashboard/school/index', compact('schools'));
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return Response
-   */
+  // Create School page
   public function create()
   {
     return view('dashboard/school/create');
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return Response
-   */
+  // Store School in Database
   public function store(Request $request)
   {
     $this->validate($request, [
@@ -49,23 +46,13 @@ class SchoolController extends Controller
 
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
+  // Show A School
   public function show($id)
   {
     
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
+  // Edit School Page
   public function edit($id)
   {
     $school = School::findOrFail($id);
@@ -73,12 +60,6 @@ class SchoolController extends Controller
     return view('dashboard/school/edit', compact('school'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
   public function update(Request $request, $id)
   {
 
@@ -95,14 +76,9 @@ class SchoolController extends Controller
     return redirect()->route('school.index')->with('success','تم التعديل بنجاح');
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
   public function destroy($id)
   {
+
     $school = School::findOrFail($id);
 
     if ($school) {

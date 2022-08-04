@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Permissions -------------------
+    public function __construct()
+    {
+        $this->middleware(['permission:Discount-read'])->only('index');
+        $this->middleware(['permission:Discount-create'])->only(['store','create']);
+        $this->middleware(['permission:Discount-update'])->only(['update','edit']);
+        $this->middleware(['permission:Discount-delete'])->only('destroy');
+    }
+    
     public function index()
     {
         $discounts = Discount::all();

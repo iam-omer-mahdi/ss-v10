@@ -10,11 +10,15 @@ use Illuminate\Http\Request;
 class ClassroomController extends Controller 
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
+  // Permissions -------------------
+  public function __construct()
+  {
+    $this->middleware(['permission:Classroom-read'])->only('index');
+    $this->middleware(['permission:Classroom-create'])->only(['store','create']);
+    $this->middleware(['permission:Classroom-update'])->only(['update','edit']);
+    $this->middleware(['permission:Classroom-delete'])->only('destroy');
+  }
+
   public function index(Request $request)
   {
     $grade = Grade::with('classroom')->findOrFail($request->id);

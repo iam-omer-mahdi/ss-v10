@@ -16,6 +16,7 @@ class School extends Model
     public $timestamps = true;
     protected $fillable = array('name');
 
+
     public function grades()
     {
        return $this->hasMany(Grade::class);

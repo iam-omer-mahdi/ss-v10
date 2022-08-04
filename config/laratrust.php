@@ -172,7 +172,7 @@ return [
          * Method to be called in the middleware return case.
          * Available: abort|redirect
          */
-        'handling' => 'redirect',
+        'handling' => 'abort',
 
         /**
          * Handlers for the unauthorized method in the middlewares.

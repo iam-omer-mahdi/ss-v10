@@ -10,11 +10,12 @@ use Illuminate\Validation\ValidationException;
 
 class StudentPartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware(['role:super_admin|finance_manager|accountant']);
+    }
+
     public function index(Request $request)
     {
         $student = Student::findOrFail($request->id);
@@ -35,12 +36,6 @@ class StudentPartController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $part_count = StudentPart::where('student_id', $request->student_id)->count();
@@ -59,23 +54,11 @@ class StudentPartController extends Controller
         return redirect()->back()->with('success','تمت الاضافة بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\StudentPart  $studentPart
-     * @return \Illuminate\Http\Response
-     */
     public function show(StudentPart $studentPart)
     {
         
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\StudentPart  $studentPart
-     * @return \Illuminate\Http\Response
-     */
     public function edit(StudentPart $studentPart)
     {
         //
@@ -88,13 +71,6 @@ class StudentPartController extends Controller
         return view('dashboard/part/receipt', compact('part'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StudentPart  $studentPart
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 
@@ -183,12 +159,6 @@ class StudentPartController extends Controller
         return redirect()->back()->with('success','تم دفع القيمة بنجاح');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\StudentPart  $studentPart
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $part = StudentPart::findOrFail($id);
