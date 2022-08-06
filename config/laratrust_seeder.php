@@ -62,6 +62,16 @@ return [
             'Exam' => 'c,r,u,d',
             'Mark' => 'c,r,u,d',
             'Subject' => 'c,r,u,d',
+        ],
+        'results_reader' => [
+            'Student' => 'r',
+            'Classroom' => 'r',
+            'Grade' => 'r',
+            'School' => 'r',
+            'Result' => 'r',
+            'Exam' => 'r',
+            'Mark' => 'r',
+            'Subject' => 'r',
         ]
     ],
 

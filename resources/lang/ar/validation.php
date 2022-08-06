@@ -128,6 +128,7 @@ return [
         'guardian_f_phone' => 'هاتف ولي الامر',
         'mother_name' => 'اسم الوالدة',
         'mother_f_phone' => 'هاتف الوالدة',
+        'username' => 'اسم المستخدم',
     ]
 ];
 

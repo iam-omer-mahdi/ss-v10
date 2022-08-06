@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th>الاسم</th>
+                        <th>اسم المستخدم</th>
                         <th>الدور</th>
                         <th></th>
                     </tr>
@@ -23,7 +24,22 @@
                     @foreach($users as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->roles[0]->name }}</td>
+                            <td>{{ $user->username }}</td>
+                            <td>
+                                 
+                                @if ($user->roles[0]->name == 'super_admin')
+                                    المشرق الرئيسي
+                                @elseif ($user->roles[0]->name == 'finance_manager')
+                                    المدير المالي
+                                @elseif ($user->roles[0]->name == 'accountant')
+                                    محاسب
+                                @elseif ($user->roles[0]->name == 'results_manager')
+                                    مشرف النتائج
+                                @elseif ($user->roles[0]->name == 'results_reader')
+                                    مطلع علي النتائج
+                                @endif
+                                    
+                             </td>
 
                             <td class="d-flex gap-2 justify-content-center">
                                 @permission('User-update')
@@ -35,6 +51,7 @@
                                 @endpermission
 
                                 @permission('User-delete')
+                                @if($user->id != auth()->user()->id && $user->roles[0]->name != 'super_admin')
                                 <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -47,6 +64,7 @@
                                     </svg>
                                     </button>
                                 </form>
+                                @endif
                                 @endpermission
                             </td>
                         </tr>
