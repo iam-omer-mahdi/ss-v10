@@ -10,7 +10,7 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">الاسم</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}">
+                <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}" required>
                 @error('name')                
                    <small class="text-danger"> {{ $message }} </small>
                 @enderror
@@ -18,7 +18,7 @@
 
             <div class="mb-3">
                 <label for="username" class="form-label">اسم المستخدم</label>
-                <input type="text" name="username" class="form-control" id="username" value="{{ $user->username }}">
+                <input type="text" name="username" class="form-control" id="username" value="{{ $user->username }}" required>
                 @error('username')
                     <small class="text-danger"> {{ $message }} </small>
                 @enderror

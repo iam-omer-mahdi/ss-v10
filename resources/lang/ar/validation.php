@@ -129,6 +129,7 @@ return [
         'mother_name' => 'اسم الوالدة',
         'mother_f_phone' => 'هاتف الوالدة',
         'username' => 'اسم المستخدم',
+        'password' => 'كلمة المرور',
     ]
 ];
 

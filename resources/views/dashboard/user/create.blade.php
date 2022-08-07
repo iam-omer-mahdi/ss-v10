@@ -8,28 +8,28 @@
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">الاسم</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
+                <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" required>
                 @error('name')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">اسم المستخدم</label>
-                <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}">
+                <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}" required>
                 @error('username')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">كلمة المرور</label>
-                <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}">
+                <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}" required>
                 @error('password')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="password_confirmation" class="form-label">تاكيد كلمة المرور</label>
-                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" value="{{ old('password_confirmation') }}">
+                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" value="{{ old('password_confirmation') }}" required>
             </div>
 
             @role('super_admin')

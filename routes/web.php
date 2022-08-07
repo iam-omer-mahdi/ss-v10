@@ -55,4 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Manage Users
     Route::resource('user', UserController::class);
+    Route::get('user/change_password/{id}', [UserController::class, 'change_password'])->name('user.change_password');
+    Route::put('user/change_password/{id}', [UserController::class, 'update_password'])->name('user.update_password');
+
 });

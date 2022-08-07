@@ -117,7 +117,7 @@
             <option value="0" disabled selected>- اختر التخفيض -</option>
                @if ($discounts->count() > 0)                   
                   @foreach($discounts as $discount)
-                     <option value="{{ $discount->id }}">{{ $discount->amount }}</option>
+                     <option value="{{ $discount->id }}">% {{ $discount->amount }}  -  {{ $discount->name }}</option>
                   @endforeach
                @endif
          </select>

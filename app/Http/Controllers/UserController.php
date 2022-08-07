@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+      // Permissions -------------------
+  public function __construct()
+  {
+    $this->middleware(['permission:User-read'])->only('index');
+    $this->middleware(['permission:User-create'])->only(['store','create']);
+    $this->middleware(['permission:User-update'])->only(['update','edit']);
+    $this->middleware(['permission:User-delete'])->only('destroy');
+  }
+
     public function index()
     {
         $users = '';
@@ -58,7 +67,40 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('dashboard/user/edit', compact('user'));
+        return view('dashboard/user/edit', compact('user'));        
+    }
+
+    public function change_password($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->id == auth()->user()->id) {    
+            return view('dashboard/user/change_password', compact('user'));
+        } else {
+            return redirect()->route('home');
+        }
+
+    }
+
+    public function update_password(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        } else {
+            return redirect()->back()->with('error','كلمة المرور الحالية غير صحيحة');
+        }
+
+
+        return redirect()->back()->with('success','تم التعديل بنجاح');
     }
 
     public function update(Request $request, $id)

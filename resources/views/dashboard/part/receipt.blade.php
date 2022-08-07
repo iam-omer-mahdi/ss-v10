@@ -12,14 +12,13 @@
             height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: start;
             overflow: hidden;
         }
 
         .container {
             width: 700px;
             margin: 0 auto;
-
         }
 
         .text-center {
@@ -29,7 +28,9 @@
         .col-6 {
             width: 50%
         }
-
+        .col-12 {
+            width: 100%;
+        }
         .row {
             display: flex;
             flex-wrap: wrap
@@ -51,17 +52,11 @@
             </h1>
             <h2 class="text-center">ايصال استلام مبلغ مالي</h2>
 
-            <div class="row mt-5 text-right">
+            <div class="row mt-5 text-right w-100">
                 <div class="col-6">
                     <p>
                         <strong>تم استلام مبلغ :</strong>
                         {{ number_format($part->amount) }}
-                    </p>
-                </div>
-                <div class="col-6">
-                    <p>
-                        <strong>من الطالب :</strong>
-                        {{ $part->student->name }}
                     </p>
                 </div>
 
@@ -80,17 +75,21 @@
                         @if ($part->part_number == 3)
                             القسط الثالث
                         @endif
+
+                        للطالب 
+                        {{ $part->student->name }}
                     </p>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12">
                     <p>
                         <strong>بتاريخ :</strong>
                         {{ $part->payment_time }}
                     </p>
                 </div>
-                <p class="mt-2 col-6"><strong>المدير المالي :</strong>..........................</p>
-                <p class="col-6"></p>
+                <div class="col-12 mt-2">
+                    <p><strong>المدير المالي :</strong>..........................</p>
+                </div>
             </div>
         </section>
     </main>
