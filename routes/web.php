@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeeController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ReportController;
@@ -52,10 +53,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('report', [ReportController::class, 'report'])->name('report.report');
     Route::post('report/get_grades', [ReportController::class, 'getGrades'])->name('report.getGrades');
     Route::post('report/get_classes', [ReportController::class, 'getClasses'])->name('report.getClasses');
-
     // Manage Users
     Route::resource('user', UserController::class);
     Route::get('user/change_password/{id}', [UserController::class, 'change_password'])->name('user.change_password');
     Route::put('user/change_password/{id}', [UserController::class, 'update_password'])->name('user.update_password');
-
+    // Exam
+    Route::resource('exam', ExamController::class);
+    // Subject
+    Route::resource('subject', SubjectController::class);
 });

@@ -9,6 +9,6 @@ class Exam extends Model
 
     protected $table = 'exams';
     public $timestamps = true;
-    protected $fillable = array('name', 'grade_id');
+    protected $fillable = array('name', 'date', 'grade_id');
 
 }
