@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fee;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Discount;
 use App\Models\GradeFee;
 use App\Models\Classroom;
@@ -35,11 +36,19 @@ class StudentController extends Controller
     return view('dashboard/student/index', compact(['students','classroom']));
   }
 
+  public function create_result($id)
+  {
+    $student = Student::with(['grade','classroom'])->findOrFail($id);
+    
+    $subjects = Subject::where('grade_id', $student->grade->id)->get();
+
+    return view('dashboard/student/create_result', compact(['student','subjects']));
+  }
+
   public function search(Request $request)
   {
-
-    // dd($request->search);
     $students = Student::with('classroom')->where('name','like', "%{$request->search}%")->get();
+
     return view('dashboard/student/search', compact(['students']));
   }
 

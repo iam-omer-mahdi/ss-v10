@@ -8,6 +8,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\StudentPartController;
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     // Students
     Route::resource('student', StudentController::class);
     Route::post('student/search', [StudentController::class, 'search'])->name('student.search');
+    Route::get('student/create_result/{id}', [StudentController::class, 'create_result'])->name('student.create_result');
+    Route::get('student/show_result/{id}', [StudentController::class, 'show_result'])->name('student.show_result');
     // Discounts
     Route::resource('discount', DiscountController::class);
     // Fees
@@ -62,3 +65,4 @@ Route::middleware(['auth'])->group(function () {
     // Subject
     Route::resource('subject', SubjectController::class);
 });
+

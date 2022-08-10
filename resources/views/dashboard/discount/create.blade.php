@@ -17,7 +17,7 @@
 
                 <div class="mb-3">
                     <label for="amount" class="form-label">القيمة</label>
-                    <input type="number" min="0" max="100" name="amount" id="amount" class="form-control" value="{{ old('amount') }}" required>
+                    <input type="number" step="0.0001" min="0.0000" max="100.0000" name="amount" id="amount" class="form-control" value="{{ old('amount') }}" required>
                     @error('amount')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

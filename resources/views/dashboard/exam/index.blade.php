@@ -2,13 +2,21 @@
 
 @section('content')
     <div class="container">
-        <h1 class="h4 mb-4">الامتحانات</h1>
-
-        <div class="table-responsive">
-            <table class="table table-default">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-4">
+                 <a href="{{ route('class.index', ['id' => $grade->id]) }}" class="text-primary text-decoration-none">{{ $grade->name }}</a>
+                 / الامتحانات 
+                </h1>
+            @permission('Exam-create')
+                <a class="btn btn-primary btn-sm" href="{{ route('exam.create', ['id' => $grade->id]) }}">اضافة امتحان</a>
+            @endpermission
+        </div>
+        <div class="table-responsive bg-white shadow-sm">
+            <table class="table table-default mb-0">
                 <thead>
                     <tr>
                         <td>الامتحان</td>
+                        <td>التاريخ</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -16,7 +24,8 @@
                     @foreach($exams as $exam)
                     <tr>
                         <td>{{ $exam->name }}</td>
-                        <td>
+                        <td>{{ $exam->date }}</td>
+                        <td class="d-flex gap-2">
                             @permission('Exam-update')
                                 <a title="تعديل" href="{{ route('exam.edit', $exam->id) }}" class="btn btn-sm btn-warning">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

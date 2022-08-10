@@ -13,10 +13,11 @@ class ExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $exams = Exam::all();
-        return view('dashboard/exam/index', compact('exams'));
+        $exams = Exam::where('grade_id','=', $request->id)->get();
+        $grade = Grade::find($request->id);
+        return view('dashboard/exam/index', compact(['exams','grade']));
     }
 
     /**
@@ -26,7 +27,7 @@ class ExamController extends Controller
      */
     public function create(Request $request)
     {
-        $grade = Grade::find($request->id);
+        $grade = Grade::findOrFail($request->id);
         return view('dashboard/exam/create', compact('grade'));
     }
 
@@ -50,7 +51,7 @@ class ExamController extends Controller
             'grade_id' => $request->grade_id
         ]);
 
-        return redirect()->route('exam.index')->with('success','تمت اضافة الامتحان بنجاح');
+        return redirect()->route('exam.index', ['id' => $request->grade_id])->with('success','تمت اضافة الامتحان بنجاح');
     }
 
     /**
@@ -72,7 +73,7 @@ class ExamController extends Controller
      */
     public function edit(Exam $exam)
     {
-        //
+        return view('dashboard/exam/edit', compact('exam'));
     }
 
     /**
@@ -82,9 +83,23 @@ class ExamController extends Controller
      * @param  \App\Models\Exam  $exam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Exam $exam)
+    public function update(Request $request, $id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+
+        $this->validate($request, [
+            'name' => 'required|string',
+            'date' => 'required',
+            'grade_id' => 'required'
+        ]);
+
+        $exam->update([
+            'name' => $request->name,
+            'date' => $request->date,
+            'grade_id' => $request->grade_id
+        ]);
+
+        return redirect()->route('exam.index', ['id' => $request->grade_id])->with('success','تم التعديل الامتحان بنجاح');
     }
 
     /**
@@ -95,6 +110,8 @@ class ExamController extends Controller
      */
     public function destroy(Exam $exam)
     {
-        //
+        $exam->delete();
+
+        return redirect()->back()->with('success',' تم الحذف بنجاح');
     }
 }

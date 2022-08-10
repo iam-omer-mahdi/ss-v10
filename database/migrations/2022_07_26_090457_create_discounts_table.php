@@ -10,7 +10,7 @@ class CreateDiscountsTable extends Migration {
 		Schema::create('discounts', function(Blueprint $table) {
 			$table->id('id');
 			$table->string('name')->unique();
-			$table->integer('amount');
+			$table->double('amount');
 			$table->timestamps();
 		});
 	}

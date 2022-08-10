@@ -2,21 +2,31 @@
 
 @section('content')
     <div class="container">
-        <h1 class="h4 mb-4">المواد الدراسية</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-4">
+                 <a href="{{ route('class.index', ['id' => $grade->id]) }}" class="text-primary text-decoration-none">{{ $grade->name }}</a>
+                 / المواد الدراسية 
+                </h1>
+            @permission('Subject-create')
+                <a class="btn btn-primary btn-sm" href="{{ route('subject.create', ['id' => $grade->id]) }}">اضافة مادة</a>
+            @endpermission
+        </div>
 
-        <div class="table-responsive">
-            <table class="table table-default">
+        <div class="table-responsive shadow-sm bg-white">
+            <table class="table table-default mb-0">
                 <thead>
                     <tr>
-                        <td>الصف</td>
                         <td>اسم المادة</td>
+                        <td>الدرجة الكاملة</td>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($subjects as $subject)
                     <tr>
                         <td>{{ $subject->name }}</td>
-                        <td>
+                        <td>{{ $subject->full_mark }}</td>
+
+                        <td class="d-flex gap-2 ">
                             @permission('Subject-update')
                                 <a title="تعديل" href="{{ route('subject.edit', $subject->id) }}" class="btn btn-sm btn-warning">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -11,4 +11,9 @@ class Exam extends Model
     public $timestamps = true;
     protected $fillable = array('name', 'date', 'grade_id');
 
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

@@ -21,7 +21,7 @@ class ClassroomController extends Controller
 
   public function index(Request $request)
   {
-    $grade = Grade::with('classroom')->findOrFail($request->id);
+    $grade = Grade::with(['classroom'])->findOrFail($request->id);
     $classrooms = $grade->classroom;
 
     return view('dashboard/class/index', compact(['classrooms','grade']));
