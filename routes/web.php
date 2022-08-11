@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::post('student/search', [StudentController::class, 'search'])->name('student.search');
     Route::get('student/create_result/{id}', [StudentController::class, 'create_result'])->name('student.create_result');
+    Route::post('student/create_result', [StudentController::class, 'store_result'])->name('student.store_result');
     Route::get('student/show_result/{id}', [StudentController::class, 'show_result'])->name('student.show_result');
     // Discounts
     Route::resource('discount', DiscountController::class);

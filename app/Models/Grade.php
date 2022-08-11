@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Exam;
 use App\Models\School;
+use App\Models\Subject;
 use App\Models\GradeFee;
 use App\Models\Classroom;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +29,16 @@ class Grade extends Model
     public function grade_fee()
     {
         return $this->hasMany(GradeFee::class);
+    }
+
+    public function subject()
+    {
+        return $this->hasMany(Subject::class);
+    }
+
+    public function exam()
+    {
+        return $this->hasMany(Exam::class);
     }
 
 }

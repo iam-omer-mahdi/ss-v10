@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Result;
 use App\Models\Discount;
 use App\Models\Classroom;
 use App\Models\StudentFee;
@@ -53,6 +54,11 @@ class Student extends Model
     public function student_part()
     {
         return $this->hasMany(StudentPart::class);
+    }
+
+    public function result()
+    {
+        return $this->hasMany(Result::class);
     }
 
 }

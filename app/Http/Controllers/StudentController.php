@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Fee;
+use App\Models\Exam;
+use App\Models\Mark;
+use App\Models\Result;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Discount;
@@ -41,8 +44,45 @@ class StudentController extends Controller
     $student = Student::with(['grade','classroom'])->findOrFail($id);
     
     $subjects = Subject::where('grade_id', $student->grade->id)->get();
+    $exams = Exam::where('grade_id', $student->grade->id)->get();
 
-    return view('dashboard/student/create_result', compact(['student','subjects']));
+    return view('dashboard/student/create_result', compact(['student','subjects','exams']));
+  }
+
+  public function store_result(Request $request)
+  {
+    $this->validate($request, [
+      'mark' => 'required',
+      'exam_id' => 'required',
+      'student_id' => 'required',
+    ]);
+
+    $result = Result::create([
+      'exam_id' => $request->exam_id,
+      'student_id' => $request->student_id
+    ]);
+
+    $marks = $request->mark;
+    $student = Student::find($request->student_id);
+    
+    $subjects = Subject::where('grade_id', $student->grade->id)->get();
+
+    foreach($marks as $index => $mark) {
+      Mark::create([
+        'mark' => $mark,
+        'result_id' => $result->id,
+        'subject_id' => $subjects[$index]->id,
+      ]);
+    }
+
+    return redirect()->back()->with('success','done');
+  }
+
+  public function show_result($id)
+  {   
+    $student = Student::with(['result.exam','grade.subject'])->find($id);
+
+    return view('dashboard/student/show_result', compact('student'));
   }
 
   public function search(Request $request)

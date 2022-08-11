@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Result;
 use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model 
@@ -15,5 +16,10 @@ class Exam extends Model
     public function grade()
     {
         return $this->belongsTo(Grade::class);
+    }
+
+    public function result()
+    {
+        return $this->hasMany(Result::class);
     }
 }
