@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Exam;
 use App\Models\Mark;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model 
@@ -22,5 +23,10 @@ class Result extends Model
     public function exam()
     {
         return $this->belongsTo(Exam::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 }

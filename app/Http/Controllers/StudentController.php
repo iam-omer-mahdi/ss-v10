@@ -49,41 +49,43 @@ class StudentController extends Controller
     return view('dashboard/student/create_result', compact(['student','subjects','exams']));
   }
 
-  public function store_result(Request $request)
-  {
-    $this->validate($request, [
-      'mark' => 'required',
-      'exam_id' => 'required',
-      'student_id' => 'required',
-    ]);
+  // public function store_result(Request $request)
+  // {
+  //   $this->validate($request, [
+  //     'mark' => 'required',
+  //     'exam_id' => 'required',
+  //     'student_id' => 'required',
+  //   ]);
 
-    $result = Result::create([
-      'exam_id' => $request->exam_id,
-      'student_id' => $request->student_id
-    ]);
+  //   $result = Result::create([
+  //     'exam_id' => $request->exam_id,
+  //     'student_id' => $request->student_id
+  //   ]);
 
-    $marks = $request->mark;
-    $student = Student::find($request->student_id);
+  //   $marks = $request->mark;
+  //   $student = Student::find($request->student_id);
     
-    $subjects = Subject::where('grade_id', $student->grade->id)->get();
+  //   $subjects = Subject::where('grade_id', $student->grade->id)->get();
 
-    foreach($marks as $index => $mark) {
-      Mark::create([
-        'mark' => $mark,
-        'result_id' => $result->id,
-        'subject_id' => $subjects[$index]->id,
-      ]);
-    }
+  //   foreach($marks as $index => $mark) {
+  //     Mark::create([
+  //       'mark' => $mark,
+  //       'result_id' => $result->id,
+  //       'subject_id' => $subjects[$index]->id,
+  //     ]);
+  //   }
 
-    return redirect()->back()->with('success','done');
-  }
+  //   return redirect()->back()->with('success','done');
+  // }
 
-  public function show_result($id)
-  {   
-    $student = Student::with(['result.exam','grade.subject'])->find($id);
+  // public function show_result($id)
+  // {   
+  //   $student = Student::with(['result.exam','grade.subject'])->find($id);
+  //   $subjects = Student::with(['result.exam','grade.subject'])->find($id);
+  //   $student = Student::with(['result.exam','grade.subject'])->find($id);
 
-    return view('dashboard/student/show_result', compact('student'));
-  }
+  //   return view('dashboard/student/show_result', compact('student'));
+  // }
 
   public function search(Request $request)
   {
@@ -193,7 +195,7 @@ class StudentController extends Controller
         'student_id' => $student->id,
       ]);
     }
-    return redirect()->back()->with('success','تمت الاضافة بنجاح');
+    return redirect()->route('student.show', $student->id)->with('success','تمت الاضافة بنجاح');
   }
 
   

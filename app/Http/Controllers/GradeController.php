@@ -124,9 +124,10 @@ class GradeController extends Controller
   {
     $grade = Grade::findOrFail($id);
     
-    $grade_fee_1 = GradeFee::where('id', $request->fee_1_id);
-    $grade_fee_2 = GradeFee::where('id', $request->fee_2_id);
+    $grade_fee_1 = GradeFee::where('id', $request->fee_1_id)->first();
+    $grade_fee_2 = GradeFee::where('id', $request->fee_2_id)->first();
 
+// dd($grade_fee_2);
 
     $this->validate($request, [
       'name' => 'required|string',
@@ -139,15 +140,11 @@ class GradeController extends Controller
     ]);
 
     $grade_fee_1->update([
-      'amount' => $request->amount_1,
-      'grade_id' => $grade->id,
-      'fee_id' => $request->fee_1_id
+      'amount' => $request->amount_1,      
     ]);
 
     $grade_fee_2->update([
       'amount' => $request->amount_2,
-      'grade_id' => $grade->id,
-      'fee_id' => $request->fee_2_id
     ]);
 
     return redirect()->route('grade.index')->with('success','تم التعديل بنجاح');

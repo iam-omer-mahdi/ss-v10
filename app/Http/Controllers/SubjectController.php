@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -15,10 +16,10 @@ class SubjectController extends Controller
      */
     public function index(Request $request)
     {
-        $subjects = Subject::where('grade_id','=', $request->id)->get();
-        $grade = Grade::find($request->id);
+        $subjects = Subject::where('exam_id','=', $request->id)->get();
+        $exam = Exam::find($request->id);
 
-        return view('dashboard/subject/index', compact(['subjects','grade']));
+        return view('dashboard/subject/index', compact(['subjects','exam']));
     }
 
     /**
@@ -28,9 +29,9 @@ class SubjectController extends Controller
      */
     public function create(Request $request)
     {
-        $grade = Grade::findOrFail($request->id);
+        $exam = Exam::findOrFail($request->id);
 
-        return view('dashboard/subject/create', compact(['grade']));
+        return view('dashboard/subject/create', compact(['exam']));
     }
 
     /**
@@ -44,16 +45,16 @@ class SubjectController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'full_mark' => 'required',
-            'grade_id' => 'required',
+            'exam_id' => 'required',
         ]);
 
         Subject::create([
             'name' => $request->name,
             'full_mark' => $request->full_mark,
-            'grade_id' => $request->grade_id,
+            'exam_id' => $request->exam_id,
         ]);
 
-        return redirect()->route('subject.index', ['id' => $request->grade_id])->with('success','تمت اضافة المادة بنجاح');
+        return redirect()->route('subject.index', ['id' => $request->exam_id])->with('success','تمت اضافة المادة بنجاح');
 
     }
 
@@ -91,16 +92,16 @@ class SubjectController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'full_mark' => 'required',
-            'grade_id' => 'required',
+            'exam_id' => 'required',
         ]);
 
         $subject->update([
             'name' => $request->name,
             'full_mark' => $request->full_mark,
-            'grade_id' => $request->grade_id,
+            'exam_id' => $request->exam_id,
         ]);
 
-        return redirect()->route('subject.index', ['id' => $request->grade_id])->with('success','تم تعديل المادة بنجاح');
+        return redirect()->route('subject.index', ['id' => $request->exam_id])->with('success','تم تعديل المادة بنجاح');
     }
 
     /**
@@ -113,6 +114,6 @@ class SubjectController extends Controller
     {
         $subject->delete();
 
-        return redirect()->route('subject.index', ['id' => $request->grade_id])->with('success','تم حذف المادة بنجاح');
+        return redirect()->route('subject.index', ['id' => $request->exam_id])->with('success','تم حذف المادة بنجاح');
     }
 }

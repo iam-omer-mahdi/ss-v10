@@ -4,11 +4,11 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h4 mb-4">
-                 <a href="{{ route('class.index', ['id' => $grade->id]) }}" class="text-primary text-decoration-none">{{ $grade->name }}</a>
-                 / المواد الدراسية 
+                <a href="{{ route('exam.index', ['id' => $exam->grade_id]) }}" class="text-primary text-decoration-none">الامتحانات</a>
+                / {{ $exam->name }} / المواد الدراسية 
                 </h1>
             @permission('Subject-create')
-                <a class="btn btn-primary btn-sm" href="{{ route('subject.create', ['id' => $grade->id]) }}">اضافة مادة</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('subject.create', ['id' => $exam->id]) }}">اضافة مادة</a>
             @endpermission
         </div>
 

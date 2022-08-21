@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Result;
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model 
@@ -21,5 +22,10 @@ class Exam extends Model
     public function result()
     {
         return $this->hasMany(Result::class);
+    }
+
+    public function subject()
+    {
+        return $this->hasMany(Subject::class);
     }
 }

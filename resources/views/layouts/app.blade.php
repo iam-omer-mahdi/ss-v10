@@ -66,6 +66,11 @@
                                 <a href="{{ route('report.index') }}" class="nav-link">التقارير</a>
                             </li>
                             @endrole
+                            @role(['super_admin','finance_manager','results_manager','results_reader','requireAll'])
+                                <li class="nav-item">
+                                    <a href="{{ route('result.index') }}" class="nav-link">النتائج</a>
+                                </li>
+                            @endrole
                         </ul>
 
                         <ul class="navbar-nav ms-auto">

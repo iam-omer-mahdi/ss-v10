@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class ReportController extends Controller
 {
+
     // Permissions -------------------
     public function __construct()
     {
-        $this->middleware(['role:super_admin|finance_manager|accountant']);
+        $this->middleware(['role:super_admin|finance_manager|accountant'])->except(['getClasses','getGrades','getExams']);
     }
 
     public function index()
@@ -26,9 +29,11 @@ class ReportController extends Controller
     {        
         if($request->report_type == 1) {
             return (new ReportController)->school_report();
-        } else if($request->report_type == 2) {
+        }
+        if($request->report_type == 2) {
             return (new ReportController)->student_report();
-        } else if($request->report_type == 3) {
+        }
+        if($request->report_type == 3) {
             return (new ReportController)->student_payment_report($request);
         }
     }
@@ -47,14 +52,29 @@ class ReportController extends Controller
         return view('dashboard/report/student_report')->with(['classrooms' => $classrooms]);
     }
 
+    // Student Payment Details
     public function student_payment_report($request)
     {
+        // School Only
+        $students = Student::with(['grade.school','discount','classroom','student_part'])
+            ->whereHas('grade', function($q) use($request) { $q->where('school_id', '=', $request->school ); })->get();
+            
+        // School And Grade
+        if ($request->has('grade') && !$request->has('classroom')) {
+            $students = Student::with(['grade.school','discount','classroom','student_part'])
+                ->whereHas('classroom', function($q) use($request) { $q->where('grade_id', '=', $request->grade); })
+                ->get();
+        }
 
-        $students = Student::with(['grade.school','discount','classroom','student_part'])->select('id','name','classroom_id','discount_id')->where(['classroom_id' => $request->classroom])->orderBy('name')->get();
+        // Classroom
+        if ($request->has('classroom')) {
+            $students = Student::with(['grade.school','discount','classroom','student_part'])->where('classroom_id', '=', $request->classroom )->get();
+        }
 
         return view('dashboard/report/student_payment_report')->with(['students' => $students]);
     }
 
+    // Return Grades
     public function getGrades(Request $request)
     {
         $grades = Grade::where('school_id', $request->id)->get();
@@ -62,11 +82,20 @@ class ReportController extends Controller
         return response()->json($grades);
     }
 
+    // Return Classes
     public function getClasses(Request $request)
     {
         $classrooms = Classroom::where('grade_id', $request->id)->get();
 
         return response()->json($classrooms);
+    }
+    
+    // Return Exams
+    public function getExams(Request $request)
+    {
+        $exams = Exam::where('grade_id', $request->id)->get();
+
+        return response()->json($exams);
     }
 
 }

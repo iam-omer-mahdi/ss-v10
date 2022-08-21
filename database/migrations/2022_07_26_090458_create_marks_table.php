@@ -9,7 +9,7 @@ class CreateMarksTable extends Migration {
 	{
 		Schema::create('marks', function(Blueprint $table) {
 			$table->id('id');
-			$table->double('mark', 2,2);
+			$table->double('mark');
 			$table->foreignId('result_id')->constrained()->onDelete('cascade');
 			$table->foreignId('subject_id')->constrained()->onDelete('cascade');
 			$table->timestamps();

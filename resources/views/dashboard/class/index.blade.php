@@ -234,9 +234,7 @@
                 @permission('Exam-read')
                     <a class="btn btn-primary btn-sm" href="{{ route('exam.index', ['id' => $grade->id]) }}">  الامتحانات</a>
                 @endpermission
-                @permission('Subject-read')
-                    <a class="btn btn-primary btn-sm" href="{{ route('subject.index', ['id' => $grade->id]) }}">  المواد</a>
-                @endpermission
+                
                 @permission('Classroom-create')
                     <a class="btn btn-primary btn-sm" href="{{ route('class.create', ['id' => $grade->id]) }}">اضافة فصل</a>
                 @endpermission

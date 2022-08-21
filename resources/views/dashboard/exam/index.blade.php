@@ -26,6 +26,10 @@
                         <td>{{ $exam->name }}</td>
                         <td>{{ $exam->date }}</td>
                         <td class="d-flex gap-2">
+                            @permission('Subject-read')
+                                <a class="btn btn-primary btn-sm" href="{{ route('subject.index', ['id' => $exam->id]) }}">  المواد</a>
+                            @endpermission
+                            
                             @permission('Exam-update')
                                 <a title="تعديل" href="{{ route('exam.edit', $exam->id) }}" class="btn btn-sm btn-warning">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

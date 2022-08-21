@@ -6,6 +6,7 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -41,8 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::post('student/search', [StudentController::class, 'search'])->name('student.search');
     Route::get('student/create_result/{id}', [StudentController::class, 'create_result'])->name('student.create_result');
-    Route::post('student/create_result', [StudentController::class, 'store_result'])->name('student.store_result');
-    Route::get('student/show_result/{id}', [StudentController::class, 'show_result'])->name('student.show_result');
     // Discounts
     Route::resource('discount', DiscountController::class);
     // Fees
@@ -57,6 +56,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('report', [ReportController::class, 'report'])->name('report.report');
     Route::post('report/get_grades', [ReportController::class, 'getGrades'])->name('report.getGrades');
     Route::post('report/get_classes', [ReportController::class, 'getClasses'])->name('report.getClasses');
+    Route::post('report/get_exams', [ReportController::class, 'getExams'])->name('report.getExams');
+
     // Manage Users
     Route::resource('user', UserController::class);
     Route::get('user/change_password/{id}', [UserController::class, 'change_password'])->name('user.change_password');
@@ -65,5 +66,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('exam', ExamController::class);
     // Subject
     Route::resource('subject', SubjectController::class);
+    // Result
+    Route::resource('result', ResultController::class);
+    Route::post('result/get_subjects', [ResultController::class, 'get_subjects'])->name('result.get_subjects');    
+    Route::post('result/result_report', [ResultController::class, 'result_report'])->name('result.result_report');    
 });
 

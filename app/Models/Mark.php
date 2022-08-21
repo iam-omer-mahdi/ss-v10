@@ -11,4 +11,9 @@ class Mark extends Model
     public $timestamps = true;
     protected $fillable = array('result_id', 'subject_id', 'mark');
 
+    public function result()
+    {
+        return $this->belongsTo(Result::class);
+    }
+
 }

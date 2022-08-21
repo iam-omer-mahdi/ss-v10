@@ -22,7 +22,7 @@
                 @enderror
             </div>
 
-            <input type="hidden" name="grade_id" value="{{ $subject->grade_id }}">
+            <input type="hidden" name="exam_id" value="{{ $subject->exam_id }}">
 
             <button class="btn btn-primary w-100">تعديل</button>
         </form>

@@ -3,8 +3,10 @@
 @section('content')
     <div class="container">
         <h1 class="h4 mb-4">سداد الطلاب</h1>
+
+        
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
-            <table class="table table-default mb-0">
+            <table class="table table-default mb-0" id="data-table">
                 <thead>
                     <tr>
                         <th class="text-start">المدرسة</th>
@@ -65,7 +67,49 @@
             </table>
         </div>
 
+        <table class="table table-bordered bg-white shadow-sm mt-4">
+            <thead>
+                <tr>
+                    <th>المبلغ المطلوب</th>
+                    <th>المبلغ المدفوع</th>
+                    <th>المبلغ المتبقي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="total"></td>
+                    <td id="paid"></td>
+                    <td id="notPaid"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
     </div>
+
+    {{-- Calculate Total Fees --}}
+    <script>
+        let total = document.querySelectorAll('table tbody tr td:nth-child(5)');
+        let paid = document.querySelectorAll('table tbody tr td:nth-child(6)');
+        let notPaid = document.querySelectorAll('table tbody tr td:nth-child(7)');
+
+        let totalPayment = 0;
+        let totalPaid = 0;
+        let totalNotPaid = 0;
+
+        total.forEach(total => totalPayment += +total.innerText);
+        paid.forEach(paid => totalPaid += +paid.innerText);
+        notPaid.forEach(notPaid => totalNotPaid += +notPaid.innerText);
+
+        let total_span = document.querySelector('#total');
+        let paid_span = document.querySelector('#paid');
+        let notPaid_span = document.querySelector('#notPaid');
+
+        total_span.innerHTML = totalPayment;
+        paid_span.innerHTML = totalPaid;
+        notPaid_span.innerHTML = totalNotPaid;
+    </script>
+
 @endsection
 
 @section('css')
@@ -77,7 +121,7 @@
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('table').DataTable({
+            let table = $('#data-table').DataTable({
                 language: {
                     "loadingRecords": "جارٍ التحميل...",
                     "lengthMenu": "أظهر _MENU_ مدخلات",
@@ -289,7 +333,9 @@
                     "decimal": ",",
                     "infoFiltered": "(مرشحة من مجموع _MAX_ مُدخل)"
                 }
+                
             });
+
         });
     </script>
 @endsection

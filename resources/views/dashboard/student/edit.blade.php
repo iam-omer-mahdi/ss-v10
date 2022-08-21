@@ -121,7 +121,19 @@
          </select>
       </div>
 
-      <input type="hidden" name="classroom_id" value="{{ $student->classroom_id }}">
+      <div class="mb-3">
+         <label for="classroom" class="form-label">الفصل</label>
+         <select name="classroom_id" id="classroom" class="form-select">
+            @foreach($student->grade->classroom as $classroom)
+               @if($classroom->id == $student->classroom_id)
+                  <option selected value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+               @else
+                  <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+               @endif
+            @endforeach
+         </select>
+      </div>
+
 
       <button type="submit" class="btn btn-primary mt-3">تعديل</button>
 
