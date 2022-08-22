@@ -45,13 +45,20 @@ class ResultController extends Controller
             'student_id' => 'required',
         ]);
 
+        $student = Student::find($request->student_id);
+
+        $res = Result::where(['exam_id' => $request->exam_id])->where(['student_id' => $request->student_id])->get();
+        
+        if ($res->count() > 0) {
+            return redirect()->back()->with('error','النتيجة موجودة مسبقا');
+        }
+
         $result = Result::create([
             'exam_id' => $request->exam_id,
             'student_id' => $request->student_id
         ]);
 
         $marks = $request->mark;
-        
         $subjects = Subject::where('exam_id', $request->exam_id)->get();
 
         foreach($marks as $index => $mark) {
@@ -62,7 +69,7 @@ class ResultController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success','تمت الاضافة بنجاح');
+        return redirect()->route('student.index', ['id' => $student->classroom_id])->with('success','تمت الاضافة بنجاح');
   
     }
 
