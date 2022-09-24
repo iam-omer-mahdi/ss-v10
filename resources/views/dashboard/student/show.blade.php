@@ -103,13 +103,13 @@
                         @if($student_fee->fee->type == 2)
                             <li class="list-group-item border-0 border-bottom col-9">
                                 @if($student->no_payment == 0)
-                                    {{ $student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount }} 
+                                    {{ number_format(floor($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount)) }} 
                                 @endif
                             </li>
                         @else
                             <li class="list-group-item border-0 border-bottom col-9"> 
                                 @if($student->no_payment == 0)
-                                    {{ $student_fee->amount }} 
+                                    {{ number_format($student_fee->amount) }} 
                                 @endif
                             </li>
                         @endif
@@ -120,7 +120,7 @@
                 <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المدفوعة</li>
                 <li class="list-group-item border-0 border-bottom col-9">
                     @if($student->no_payment == 0)
-                        {{ $total_paid_amount }}
+                        {{ number_format($total_paid_amount) }}
                     @endif
                 </li>
             </ul>
@@ -129,7 +129,7 @@
                 <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المتبقية</li>
                 <li class="list-group-item border-0 border-bottom col-9">
                     @if($student->no_payment == 0)
-                        {{ $total_remaining_amount }}
+                        {{ number_format($total_remaining_amount) }}
                     @endif
                 </li>
             </ul>

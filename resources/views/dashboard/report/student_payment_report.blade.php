@@ -1,9 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        @media print {
+            .table-responsive {
+                display: none !important;       
+            }
+        }
+    </style>
+
     <div class="container">
         <h1 class="h4 mb-4">سداد الطلاب</h1>
+		<p class="d-flex gap-4">
+			<span class="btn btn-primary">{{ $school->name }}</span>
+			<span class="btn btn-primary">{{ $grade->name ?? 'كل الصفوف' }}</span>
+			<span class="btn btn-primary">{{ $classroom->name ?? 'كل الفصول' }}</span>
+		</p>
 
+		<table class="table table-bordered bg-white shadow-sm mt-4">
+            <thead>
+                <tr>
+                    <th>المبلغ المطلوب</th>
+                    <th>المبلغ المدفوع</th>
+                    <th>المبلغ المتبقي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ number_format(floor($fees[0])) }}</td>
+                    <td>{{ number_format(floor($fees[1])) }}</td>
+                    <td>{{ number_format(floor($fees[2])) }}</td>
+                </tr>
+            </tbody>
+        </table>
         
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
             <table class="table table-default mb-0" id="data-table">
@@ -34,7 +63,7 @@
                                         $total_payment += $part->amount;
                                     }
                                 @endphp
-                                {{ $total_payment }}
+                                {{ number_format(floor($total_payment)) }}
                             </td>
                             <td>
                                 @php 
@@ -45,7 +74,7 @@
                                         }
                                     }
                                 @endphp
-                                {{ $total_paid }}
+                                {{ number_format(floor($total_paid)) }}
                             </td>
                             <td>
                                 @php 
@@ -56,7 +85,7 @@
                                         }
                                     }
                                 @endphp
-                                {{ $total_not_paid }}
+                                {{ number_format(floor($total_not_paid)) }}
                             </td>
                             <td>
                                 {{ $student->discount->amount }} %
@@ -66,49 +95,7 @@
                 </tbody>
             </table>
         </div>
-
-        <table class="table table-bordered bg-white shadow-sm mt-4">
-            <thead>
-                <tr>
-                    <th>المبلغ المطلوب</th>
-                    <th>المبلغ المدفوع</th>
-                    <th>المبلغ المتبقي</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="total"></td>
-                    <td id="paid"></td>
-                    <td id="notPaid"></td>
-                </tr>
-            </tbody>
-        </table>
-
-
     </div>
-
-    {{-- Calculate Total Fees --}}
-    <script>
-        let total = document.querySelectorAll('table tbody tr td:nth-child(5)');
-        let paid = document.querySelectorAll('table tbody tr td:nth-child(6)');
-        let notPaid = document.querySelectorAll('table tbody tr td:nth-child(7)');
-
-        let totalPayment = 0;
-        let totalPaid = 0;
-        let totalNotPaid = 0;
-
-        total.forEach(total => totalPayment += +total.innerText);
-        paid.forEach(paid => totalPaid += +paid.innerText);
-        notPaid.forEach(notPaid => totalNotPaid += +notPaid.innerText);
-
-        let total_span = document.querySelector('#total');
-        let paid_span = document.querySelector('#paid');
-        let notPaid_span = document.querySelector('#notPaid');
-
-        total_span.innerHTML = totalPayment;
-        paid_span.innerHTML = totalPaid;
-        notPaid_span.innerHTML = totalNotPaid;
-    </script>
 
 @endsection
 
@@ -122,6 +109,16 @@
     <script>
         $(document).ready(function() {
             let table = $('#data-table').DataTable({
+				dom: 'Bfrtip',
+                buttons: [
+                    'excel', 
+					{
+					extend: 'print',
+					customize: function(win) {
+						$(win.document.body).css('direction','rtl')
+						
+					}}
+                ],
                 language: {
                     "loadingRecords": "جارٍ التحميل...",
                     "lengthMenu": "أظهر _MENU_ مدخلات",

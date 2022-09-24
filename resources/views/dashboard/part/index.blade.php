@@ -41,9 +41,9 @@
             @csrf
             @method('PUT')
             <div class="row">
-                @foreach($parts as $part)
+                @foreach($parts as $index => $part)
                 <div class="col-4 mb-2">
-                    <input class="form-control" type="number" name="part_number[]" value="{{ $part->amount }}" @if($part->paid == 1) readonly style="cursor: not-allowed" @endif>
+                    <input class="form-control" type="number" name="part_number[]" min="0" step="any" required value="{{ $part->amount }}" @if($part->paid == 1) readonly style="cursor: not-allowed" @endif>
                     <input type="hidden" name="part_id[]" value="{{ $part->id }}">
                 </div>
                 @endforeach
