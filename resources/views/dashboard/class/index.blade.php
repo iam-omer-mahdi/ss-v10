@@ -226,6 +226,11 @@
     </script>
 @endsection
 
+@php
+    $classroom_update = auth()->user()->isAbleTo('Classroom-update');
+    $classroom_delete = auth()->user()->isAbleTo('Classroom-delete');
+@endphp
+
 @section('content')
     <div class="container">
         <header class="d-flex justify-content-between">
@@ -265,14 +270,14 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
                                     </a>
-                                    @permission('Classroom-update')
+                                    @if($classroom_update)
                                     <a title="تعديل" href="{{ route('class.edit',  $classroom->id) }}" class="btn btn-sm btn-warning">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                     </a>
-                                    @endpermission
-                                    @permission('Classroom-delete')
+                                    @endif
+                                    @if($classroom_delete)
                                     <form action="{{ route('class.destroy', $classroom->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -282,7 +287,7 @@
                                             </svg>
                                         </button>
                                     </form>
-                                    @endpermission
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -291,5 +296,4 @@
             </table>
         </div>
     </div>
-
 @endsection

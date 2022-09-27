@@ -226,14 +226,21 @@
     </script>
 @endsection
 
+@php
+    $result_create  = auth()->user()->isAbleTo('Result-create');
+    $result_read    = auth()->user()->isAbleTo('Result-read');
+    $student_delete = auth()->user()->isAbleTo('Student-delete');
+    $student_edit   = auth()->user()->hasRole(['super_admin|accountant|finance_manager']);
+    $student_create = auth()->user()->isAbleTo('Student-create');
+@endphp
+
 @section('content')
     <div class="container">
         <header class="d-flex justify-content-between">
             <h1 class="h5">  <a class="text-primary text-decoration-none" href="{{ route('grade.index', ) }}">{{ $classroom->grade->school->name }} </a> /  <a class="text-primary text-decoration-none" href="{{ route('class.index', ['id' => $classroom->grade_id]) }}">{{ $classroom->grade->name }}</a> / {{ $classroom->name }}</h1>
-            @if(auth()->user()->isAbleTo('Student-create'))
+            @if($student_create)
             <a class="btn btn-primary btn-sm" href="{{ route('student.create', ['id' => $classroom->id]) }}">اضافة طلاب</a>
             @endif
-    
         </header>
 
         <div class="table-responsive mt-4 shadow-sm bg-white p-4 rounded">
@@ -264,7 +271,7 @@
                                     </a>
                                   
                                     <ul class="dropdown-menu">
-                                      @permission('Result-create')
+                                      @if($result_create)
                                         <li>
                                           <a title="اضافة نتيجة" href="{{ route('result.create', ['id' => $student->id]) }}" class="dropdown-item">
                                               <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -273,8 +280,8 @@
                                               اضافة نتيجة
                                           </a>
                                       </li>
-                                      @endpermission
-                                      @permission('Result-read')
+                                      @endif
+                                      @if($result_read)
                                       <li>
                                           <a title="عرض النتائج" href="{{ route('result.show', $student->id) }}" class="dropdown-item">
                                               <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -284,9 +291,9 @@
                                               عرض النتائج
                                           </a>
                                       </li>
-                                      @endpermission
+                                      @endif
                                       <li>
-                                        @if(auth()->user()->hasRole(['super_admin|accountant|finance_manager']))
+                                        @if($student_edit)
                                             <a title="تعديل" href="{{ route('student.edit', $student->id) }}" class="dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -296,7 +303,7 @@
                                         @endif
                                       </li>
                                       <li>
-                                        @permission('Student-delete')
+                                        @if($student_delete)
                                             <form action="{{ route('student.destroy', $student->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -307,7 +314,7 @@
                                                     حذف
                                                 </button>
                                             </form>
-                                        @endpermission
+                                        @endif
                                       </li>
                                     </ul>
                                   </div>
