@@ -22,7 +22,7 @@
                             <tr>
                                 {{-- Calculate Total And Precentage --}}
                                 @php 
-                                    $total_marks = 0;
+                                    $total_marks = $full_mark = 0;
                                     $subjects = $result->exam->subject->count();
                                 @endphp
                                 @foreach($result->exam->subject as $index => $subject)
@@ -30,10 +30,11 @@
                                     <td>{{ $result->mark[$index]->mark }}</td>
                                     {{-- Calculate Total --}}
                                     @php $total_marks += $result->mark[$index]->mark  @endphp
+                                    @php $full_mark += $subject->full_mark  @endphp
 
                                 @endforeach
                                 {{-- Total And Precentage --}}
-                                <td>{{ $total_marks }}</td>
+                                <td>{{ $full_mark }} / {{ $total_marks }}</td>
                                 <td>{{ round($total_marks / $subjects, 1) }} %</td>
                             </tr>
                         </tbody>

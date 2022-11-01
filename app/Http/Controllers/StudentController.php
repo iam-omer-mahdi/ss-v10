@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Fee;
 use App\Models\Exam;
-use App\Models\Mark;
-use App\Models\Result;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Discount;
 use App\Models\GradeFee;
 use App\Models\Classroom;
-use App\Models\StudentFee;
 use App\Models\Nationality;
 use App\Models\StudentPart;
 use Illuminate\Http\Request;
@@ -49,44 +44,6 @@ class StudentController extends Controller
 
     return view('dashboard/student/create_result', compact(['student', 'subjects', 'exams']));
   }
-
-  // public function store_result(Request $request)
-  // {
-  //   $this->validate($request, [
-  //     'mark' => 'required',
-  //     'exam_id' => 'required',
-  //     'student_id' => 'required',
-  //   ]);
-
-  //   $result = Result::create([
-  //     'exam_id' => $request->exam_id,
-  //     'student_id' => $request->student_id
-  //   ]);
-
-  //   $marks = $request->mark;
-  //   $student = Student::find($request->student_id);
-
-  //   $subjects = Subject::where('grade_id', $student->grade->id)->get();
-
-  //   foreach($marks as $index => $mark) {
-  //     Mark::create([
-  //       'mark' => $mark,
-  //       'result_id' => $result->id,
-  //       'subject_id' => $subjects[$index]->id,
-  //     ]);
-  //   }
-
-  //   return redirect()->back()->with('success','done');
-  // }
-
-  // public function show_result($id)
-  // {   
-  //   $student = Student::with(['result.exam','grade.subject'])->find($id);
-  //   $subjects = Student::with(['result.exam','grade.subject'])->find($id);
-  //   $student = Student::with(['result.exam','grade.subject'])->find($id);
-
-  //   return view('dashboard/student/show_result', compact('student'));
-  // }
 
   public function search(Request $request)
   {
@@ -136,7 +93,9 @@ class StudentController extends Controller
       'discount' => 'nullable',
     ]);
 
-    DB::transaction(function () use ($request) {
+    $student = null;
+
+    DB::transaction(function () use ($request, &$student) {
 
       $student = Student::create([
         'name'  => $request->name,
@@ -198,9 +157,9 @@ class StudentController extends Controller
           'student_id' => $student->id,
         ]);
       }
-      return redirect()->route('student.show', $student->id)->with('success', 'تمت الاضافة بنجاح');
     });
 
+    return redirect()->route('student.show', $student->id)->with('success', 'تمت الاضافة بنجاح');
 
   }
 

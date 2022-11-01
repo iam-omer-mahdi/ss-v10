@@ -37,7 +37,10 @@ Route::middleware(['auth'])->group(function () {
     // Grades
     Route::resource('grade', GradeController::class);
     Route::get('grade/getGrades/{id}', [GradeController::class, 'getGrades'])->name('getGrades');
+    // Classes
     Route::resource('class', ClassroomController::class);
+    Route::get('create_result', [ResultController::class, 'create_result'])->name('create_result');
+    Route::post('create_result', [ResultController::class, 'store_result'])->name('store_result');
     // Students
     Route::resource('student', StudentController::class);
     Route::post('student/search', [StudentController::class, 'search'])->name('student.search');

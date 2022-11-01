@@ -29,6 +29,9 @@
                             @permission('Subject-read')
                                 <a class="btn btn-primary btn-sm" href="{{ route('subject.index', ['id' => $exam->id]) }}">  المواد</a>
                             @endpermission
+                            @permission('Result-create')
+                                <a class="btn btn-primary btn-sm" href="{{ route('create_result', ['id' => $exam->id]) }}"> اضافة النتائج</a>
+                            @endpermission
                             
                             @permission('Exam-update')
                                 <a title="تعديل" href="{{ route('exam.edit', $exam->id) }}" class="btn btn-sm btn-warning">

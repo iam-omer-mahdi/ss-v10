@@ -32,7 +32,7 @@
             {{-- Classroom --}}
             <div class="mb-3">
                 <label for="classroom" class="form-label">الفصل</label>
-                <select name="classroom" id="classroom" class="form-select mb-2" required>
+                <select name="classroom" id="classroom" class="form-select mb-2">
                     <option selected disabled value="0">- اختر الفصل -</option>
                 </select>
             </div>
