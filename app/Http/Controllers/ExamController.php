@@ -15,9 +15,9 @@ class ExamController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $exams = Exam::where('grade_id','=', $request->id)->get();
-        $grade = Grade::find($request->id);
+        $grade = Grade::findOrFail($request->query('id'));
+        $exams = Exam::where('grade_id', $request->query('id'))->get();
+
         return view('dashboard/exam/index', compact(['exams','grade']));
     }
 

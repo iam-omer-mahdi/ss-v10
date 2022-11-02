@@ -71,6 +71,17 @@
                                     <a href="{{ route('result.index') }}" class="nav-link">النتائج</a>
                                 </li>
                             @endrole
+                            <form action="{{ route('student.search') }}" method="POST">
+                                @csrf
+                                <div class="input-group ms-4">
+                                   <input type="text" name="search" placeholder="البحث عن طالب ..." class="bg-transparent border text-white" required>
+                                   <button class="btn btn-sm btn-outline-light" title="ابحث">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                      </svg>
+                                   </button>
+                                </div>
+                             </form>
                         </ul>
 
                         <ul class="navbar-nav ms-auto">

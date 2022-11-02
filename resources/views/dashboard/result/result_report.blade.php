@@ -29,7 +29,9 @@
                             @endforeach
                             {{-- Total And Precentage --}}
                             <td class="text-center">{{ $result['total_marks'] }}</td>
-                            <td class="text-center">{{ round($result['total_marks'] / $exam->subject->count(), 1) }} %</td>
+                            @if($exam->subject->count() > 0)
+                                <td class="text-center">{{ round($result['total_marks'] / $exam->subject->count(), 1) }} %</td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
@@ -47,6 +49,7 @@
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            
             let table = $('#data-table').DataTable({
 				dom: 'Bfrtip',
                 buttons: [
@@ -56,6 +59,9 @@
 					customize: function(win) {
 						$(win.document.body).css('direction','rtl')
 						$(win.document.body).find( 'h1' ).css( {'font-size': '2rem','text-align': 'center','margin-bottom': '1.75rem' });
+                        $(win.document.body).find( 'table' ).css({'text-align': 'right'});
+                        $(win.document.body).find( 'table th' ).css({'text-align': 'right'});
+                        $(win.document.body).find( 'table td' ).css({'text-align': 'right'});
 					}}
                 ],
                 language: {

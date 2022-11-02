@@ -15,9 +15,8 @@
             <tbody class="bg-white">
                 <form action="{{ route('store_result') }}" method="POST" class="shadow bg-white">
                     @csrf
-                    <input type="hidden" name="subjects_count" value="{{ count($exam->subject) }}">
-                    <input type="hidden" name="students_count" value="{{ count($students) }}">
                     <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                    <input type="hidden" name="grade_id" value="{{ $exam->grade_id }}">
                     @foreach ($students as $key => $student)
                             <input type="hidden" name="students[{{$key}}][student_id]" value="{{ $student->id }}">
                             <tr>

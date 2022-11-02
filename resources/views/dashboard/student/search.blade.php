@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('table').DataTable({
+                "searching": false,
                 language: {
                     "loadingRecords": "جارٍ التحميل...",
                     "lengthMenu": "أظهر _MENU_ مدخلات",

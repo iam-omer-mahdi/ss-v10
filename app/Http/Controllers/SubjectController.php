@@ -110,10 +110,11 @@ class SubjectController extends Controller
      * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy($id)
     {
+        $subject = Subject::findOrFail($id);
         $subject->delete();
 
-        return redirect()->route('subject.index', ['id' => $request->exam_id])->with('success','تم حذف المادة بنجاح');
+        return redirect()->back()->with('success','تم حذف المادة بنجاح');
     }
 }

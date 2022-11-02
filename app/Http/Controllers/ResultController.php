@@ -52,32 +52,35 @@ class ResultController extends Controller
 
     public function store_result(Request $request)
     {
+        if ($request->has('students')) {     
         
-        foreach ($request->students as $key => $student) {
+            foreach ($request->students as $key => $student) {
 
-            DB::transaction(function () use($request, $student) {
-                
-                $result = Result::create([
-                    'exam_id' => $request->exam_id,
-                    'student_id' => $student['student_id']
-                ]);
-
-                $marks = $student['subjects'];
-
-                foreach ($marks as $index => $mark) {
-                    Mark::create([
-                        'mark' => $mark['mark'],
-                        'result_id' => $result->id,
-                        'subject_id' => $mark['subject_id'],
+                DB::transaction(function () use($request, $student) {
+                    
+                    $result = Result::create([
+                        'exam_id' => $request->exam_id,
+                        'student_id' => $student['student_id']
                     ]);
-                }
 
-            });
+                    $marks = $student['subjects'];
 
+                    foreach ($marks as $index => $mark) {
+                        Mark::create([
+                            'mark' => $mark['mark'],
+                            'result_id' => $result->id,
+                            'subject_id' => $mark['subject_id'],
+                        ]);
+                    }
+
+                });
+
+            }
+
+            return redirect()->route('exam.index', ['id' => $request->grade_id])->with('success', 'تمت الاضافة بنجاح');
         }
-
-        return redirect()->route('exam.index', ['id' => $request->exam_id])->with('success', 'تمت الاضافة بنجاح');
         
+        return redirect()->route('exam.index', ['id' => $request->grade_id]);
     }
 
     public function get_subjects(Request $request)
