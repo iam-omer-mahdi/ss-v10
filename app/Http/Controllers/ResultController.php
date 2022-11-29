@@ -155,11 +155,62 @@ class ResultController extends Controller
         }
 
 
-        
+        $success = 0;
+        foreach ($exam->subject as $subject) {
+            $success += $subject->success_mark;
+        }
+
         foreach ($results as $result) {
             $result['total_marks'] = 0;
             foreach ($result->mark as $mark) {
                 $result['total_marks'] += $mark->mark;
+                $result['precentage'] = $result['total_marks'] /  count($result->mark);
+
+            }
+        }
+
+        if ($request->has('scoring')) {
+            switch ($request->query('scoring')) {
+                case 1:
+                        $results = $results->where('precentage','>=','90');
+                    break;
+                
+                case 2:
+                        $results = $results->where('precentage','>=','80')->where('precentage','<=','89');
+                    break;
+                
+                case 3:
+                        $results = $results->where('precentage','>=','70')->where('precentage','<=','79');
+                    break;
+                
+                case 4:
+                        $results = $results->where('precentage','>=','60')->where('precentage','<=','69');
+                    break;
+                
+                case 5:
+                        $results = $results->where('precentage','>=','50')->where('precentage','<=','59');
+                    break;
+                
+                case 6:
+                        $results = $results->where('precentage','<=','49');
+                    break;
+                
+                default:
+                        $results;
+                    break;
+            }
+        }
+        
+        if ($request->has('success')) { 
+            switch ($request->query('success')) {
+                case 1:
+                        $results = $results->where('total_marks','>=',$success);
+                    break;
+                case 2:
+                    $results = $results->where('total_marks','<',$success);
+                default:
+                    $results;
+                    break;
             }
         }
 

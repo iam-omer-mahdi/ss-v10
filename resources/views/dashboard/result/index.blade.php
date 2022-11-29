@@ -3,8 +3,7 @@
 @section('content')
     <div class="container">
         <h1 class="h4 mb-4">النتائج</h1>
-        <form action="{{ route('result.result_report') }}" method="POST" class="card p-4 shadow-sm">
-            @csrf
+        <form action="{{ route('result.result_report') }}" method="GET" class="card p-4 shadow-sm">
             <div class="mb-3">
                 <label for="school_id" class="form-label">المدرسة</label>
                 <select onchange="getGrades(this.value)" name="school_id" id="school_id" class="form-select" required>

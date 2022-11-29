@@ -22,6 +22,14 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label for="success_mark" class="form-label">درجة النجاح</label>
+                <input min="0" type="number" class="form-control" id="success_mark" name="success_mark" value="{{ $subject->success_mark }}">
+                @error('success_mark')
+                    <small class="text-danger"> {{ $message }} </small>
+                @enderror
+            </div>
+
             <input type="hidden" name="exam_id" value="{{ $subject->exam_id }}">
 
             <button class="btn btn-primary w-100">تعديل</button>

@@ -7,6 +7,26 @@
 @section('content')
     <div class="container-fluid px-4">  
         <h1 class="h4 mb-4">{{ $exam->grade->school->name ?? '' }} / {{ $exam->grade->name ?? '' }} / {{ $classroom->name ?? 'كل الفصول'}} / {{ $exam->name }}  </h1>
+        
+        <div class="d-flex gap-4">
+            <label for="scoring">التقدير</label>
+            <select name="scoring" id="scoring" class="form-select form-select-sm rounded-0 mb-4">
+                <option @if(Request::query('scoring') == 1) selected @endif value="0">الكل</option>
+                <option @if(Request::query('scoring') == 1) selected @endif value="1">ممتاز</option>
+                <option @if(Request::query('scoring') == 2) selected @endif value="2">جيد جدا</option>
+                <option @if(Request::query('scoring') == 3) selected @endif value="3">جيد</option>
+                <option @if(Request::query('scoring') == 4) selected @endif value="4">وسط</option>
+                <option @if(Request::query('scoring') == 5) selected @endif value="5">مقبول</option>
+                <option @if(Request::query('scoring') == 6) selected @endif value="6">يحتاج مساعدة</option>
+            </select>
+            <select name="success" id="success" class="form-select form-select-sm rounded-0 mb-4">
+                <option @if(Request::query('success') == 0) selected @endif value="0">الكل</option>
+                <option @if(Request::query('success') == 1) selected @endif value="1">الطلاب الناجحين</option>
+                <option @if(Request::query('success') == 2) selected @endif value="2">الطلاب الراسبين</option>
+            </select>
+        </div>
+          
+
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
             <table class="table table-default mb-0" id="data-table">
                 <thead>
@@ -30,7 +50,7 @@
                             {{-- Total And Precentage --}}
                             <td class="text-center">{{ $result['total_marks'] }}</td>
                             @if($exam->subject->count() > 0)
-                                <td class="text-center">{{ round($result['total_marks'] / $exam->subject->count(), 1) }} %</td>
+                                <td class="text-center">{{ floor(($result['total_marks'] / $exam->subject->sum('full_mark')) * 100) }} %</td>
                             @endif
                         </tr>
                     @endforeach
@@ -38,6 +58,8 @@
             </table>      
         </div>
     </div>
+    
+   
 @endsection
 
 @section('css')
@@ -280,4 +302,34 @@
 
         });
     </script>
+
+<script>
+    let scoring = document.querySelector('#scoring');
+    let success = document.querySelector('#success');
+    
+    scoring.addEventListener('change', function () {
+        let url = new URL(window.location.href);
+        let search_params = url.searchParams;
+
+        search_params.delete('scoring');
+        search_params.append('scoring', +scoring.value);
+
+        let new_url = url.toString();
+
+        window.location.assign(new_url);
+    })
+
+    success.addEventListener('change', function () { 
+        let url = new URL(window.location.href);
+        let search_params = url.searchParams;
+
+        search_params.delete('success');
+        search_params.append('success', +success.value);
+
+        let new_url = url.toString();
+
+        window.location.assign(new_url);
+    });
+
+</script>
 @endsection

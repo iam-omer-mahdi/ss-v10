@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\ExamController;
@@ -72,6 +73,6 @@ Route::middleware(['auth'])->group(function () {
     // Result
     Route::resource('result', ResultController::class);
     Route::post('result/get_subjects', [ResultController::class, 'get_subjects'])->name('result.get_subjects');    
-    Route::post('result/result_report', [ResultController::class, 'result_report'])->name('result.result_report');    
+    Route::get('result_report', [ResultController::class, 'result_report'])->name('result.result_report');    
 });
 
