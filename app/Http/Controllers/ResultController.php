@@ -164,7 +164,7 @@ class ResultController extends Controller
             $result['total_marks'] = 0;
             foreach ($result->mark as $mark) {
                 $result['total_marks'] += $mark->mark;
-                $result['precentage'] = $result['total_marks'] /  count($result->mark);
+                $result['precentage'] = floor(($result['total_marks'] /  $exam->subject->sum('full_mark')) * 100) ;
 
             }
         }

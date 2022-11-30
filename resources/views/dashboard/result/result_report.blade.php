@@ -11,7 +11,7 @@
         <div class="d-flex gap-4">
             <label for="scoring">التقدير</label>
             <select name="scoring" id="scoring" class="form-select form-select-sm rounded-0 mb-4">
-                <option @if(Request::query('scoring') == 1) selected @endif value="0">الكل</option>
+                <option @if(Request::query('scoring') == 0) selected @endif value="0">الكل</option>
                 <option @if(Request::query('scoring') == 1) selected @endif value="1">ممتاز</option>
                 <option @if(Request::query('scoring') == 2) selected @endif value="2">جيد جدا</option>
                 <option @if(Request::query('scoring') == 3) selected @endif value="3">جيد</option>
