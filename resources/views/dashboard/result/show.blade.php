@@ -34,8 +34,8 @@
 
                                 @endforeach
                                 {{-- Total And Precentage --}}
-                                <td>{{ $full_mark }} / {{ $total_marks }}</td>
-                                <td>{{ round($total_marks / $subjects, 1) }} %</td>
+                                <td>{{ $total_marks }}</td>
+                                <td>{{ floor(($total_marks / $result->exam->subject->sum('full_mark') * 100) ) }} %</td>
                             </tr>
                         </tbody>
                     </table>      

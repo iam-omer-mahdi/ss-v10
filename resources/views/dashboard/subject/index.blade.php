@@ -18,6 +18,7 @@
                     <tr>
                         <td>اسم المادة</td>
                         <td>الدرجة الكاملة</td>
+                        <td>درجة النجاح</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@
                     <tr>
                         <td>{{ $subject->name }}</td>
                         <td>{{ $subject->full_mark }}</td>
+                        <td>{{ $subject->success_mark }}</td>
 
                         <td class="d-flex gap-2 ">
                             @permission('Subject-update')

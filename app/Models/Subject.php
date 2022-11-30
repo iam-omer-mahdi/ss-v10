@@ -9,6 +9,6 @@ class Subject extends Model
 
     protected $table = 'subjects';
     public $timestamps = true;
-    protected $fillable = array('name', 'full_mark', 'exam_id');
+    protected $fillable = array('name', 'full_mark', 'success_mark', 'exam_id');
 
 }

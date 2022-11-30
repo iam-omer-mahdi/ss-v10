@@ -15,8 +15,16 @@
 
             <div class="mb-3">
                 <label for="full_mark" class="form-label">الدرجة الكاملة</label>
-                <input type="number" class="form-control" id="full_mark" name="full_mark" value="{{ old('full_mark') }}">
+                <input type="number" min="0" class="form-control" id="full_mark" name="full_mark" value="{{ old('full_mark') }}">
                 @error('full_mark')
+                    <small class="text-danger"> {{ $message }} </small>
+                @enderror
+            </div>
+            
+            <div class="mb-3">
+                <label for="success_mark" class="form-label">درجة النجاح</label>
+                <input min="0" type="number" class="form-control" id="success_mark" name="success_mark" value="{{ old('success_mark') }}">
+                @error('success_mark')
                     <small class="text-danger"> {{ $message }} </small>
                 @enderror
             </div>

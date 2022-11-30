@@ -45,12 +45,14 @@ class SubjectController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'full_mark' => 'required',
+            'success_mark' => 'required',
             'exam_id' => 'required',
         ]);
 
         Subject::create([
             'name' => $request->name,
             'full_mark' => $request->full_mark,
+            'success_mark' => $request->success_mark,
             'exam_id' => $request->exam_id,
         ]);
 
@@ -92,12 +94,14 @@ class SubjectController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'full_mark' => 'required',
+            'success_mark' => 'required',
             'exam_id' => 'required',
         ]);
 
         $subject->update([
             'name' => $request->name,
             'full_mark' => $request->full_mark,
+            'success_mark' => $request->success_mark,
             'exam_id' => $request->exam_id,
         ]);
 
