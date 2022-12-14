@@ -57,7 +57,7 @@
                                 <a href="{{ route('grade.index') }}" class="nav-link">الصفوف</a>
                             </li>
 
-                            @role(['super_admin','finance_manager','accountant','requireAll'])
+                            @role(['super_admin','finance_manager','accountant','super_manager','requireAll'])
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -71,7 +71,7 @@
                                 <a href="{{ route('report.index') }}" class="nav-link">التقارير</a>
                             </li>
                             @endrole
-                            @role(['super_admin','finance_manager','results_manager','results_reader','requireAll'])
+                            @role(['super_admin','finance_manager','results_manager','results_reader','super_manager','requireAll'])
                                 <li class="nav-item">
                                     <a href="{{ route('result.index') }}" class="nav-link">النتائج</a>
                                 </li>

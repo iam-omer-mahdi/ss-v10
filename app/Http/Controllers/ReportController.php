@@ -17,7 +17,7 @@ class ReportController extends Controller
     // Permissions -------------------
     public function __construct()
     {
-        $this->middleware(['role:super_admin|finance_manager|accountant'])->except(['getClasses', 'getGrades', 'getExams']);
+        $this->middleware(['role:super_admin|super_manager|finance_manager|accountant'])->except(['getClasses', 'getGrades', 'getExams']);
     }
 
     public function index()

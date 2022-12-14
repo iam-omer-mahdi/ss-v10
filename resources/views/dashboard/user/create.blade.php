@@ -41,6 +41,8 @@
                         <label class="form-check-label" for="role_{{ $role->id }}">
                                 @if ($role->name == 'super_admin')
                                     مشرق رئيسي
+                                @elseif ($role->name == 'super_manager')
+                                    المدير
                                 @elseif ($role->name == 'finance_manager')
                                     مدير مالي
                                 @elseif ($role->name == 'accountant')

@@ -11,13 +11,19 @@ class RoleTableSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
-     */
+    */
     public function run()
     {
         Role::create([
             'name' => 'super_admin',
             'display_name' => 'المشرف الرئيسي',
             'description' => 'يستطيع عمل اي شي في النظام',
+        ]);
+        
+        Role::create([
+            'name' => 'super_manager',
+            'display_name' => 'المدير',
+            'description' => 'يستطيع رؤية اي شي في النظام',
         ]);
         
         Role::create([

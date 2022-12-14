@@ -29,6 +29,8 @@
                                  
                                 @if ($user->roles[0]->name == 'super_admin')
                                     المشرق الرئيسي
+                                @elseif ($user->roles[0]->name == 'super_manager')
+                                    المدير
                                 @elseif ($user->roles[0]->name == 'finance_manager')
                                     المدير المالي
                                 @elseif ($user->roles[0]->name == 'accountant')
