@@ -23,6 +23,11 @@
         body {
             font-family: 'Cairo', sans-serif;
         }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
     </style>
     {{-- Custom css --}}
     @yield('css')
@@ -30,7 +35,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm no-print">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     مدارس مدينتي

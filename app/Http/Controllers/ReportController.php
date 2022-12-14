@@ -59,6 +59,21 @@ class ReportController extends Controller
         // Global Variables
         $student_ids = [];
         $fees = $school = $grade = $classroom = null;
+        
+        // no school
+        if (!$request->has('school') && !$request->has('classroom') && !$request->has('grade')) {             
+             
+            $students = Student::select('name','id','classroom_id','discount_id')->with(['grade.school', 'discount', 'classroom', 'student_part'])->orderBy('name')->get();
+            foreach ($students as $student) {
+                $student_ids[] = $student->id;
+            }
+            // Calculate Fess
+            $fees = $this->calc_total($student_ids);
+            // Return school - grade - classroom
+            $school = '';
+            $grade = '';
+            $classroom = '';
+        }
 
         // School Only
         if ($request->has('school') && !$request->has('classroom') && !$request->has('grade')) {
@@ -104,7 +119,6 @@ class ReportController extends Controller
             $classroom = Classroom::find($request->classroom);
             $grade = Grade::find($classroom->grade_id);
             $school = School::find($grade->school_id);
-
 
             foreach ($students as $student) {
                 $student_ids[] = $student->id;

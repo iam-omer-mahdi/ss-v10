@@ -3,44 +3,105 @@
 @section('content')
     <div class="container-fluid px-4">
         
-        <h1 class="h4 mb-4">{{ $student->name }}</h1>
         @foreach($results as $result)
-        <div class="card shadow-sm mb-4">
+        <div class="card border-0 mb-4" id="print-{{ $result->id }}">
             <div class="card-body">
-                <h2 class="h4 p-2">{{ $result->exam->name }}</h2>
-                <table class="table table-bordered table-light">
+                <img src="{{ asset('school-logo.png') }}" alt="logo" width="100" class="mx-auto d-block mb-2">
+                <p class="fw-bold text-center text-danger">مدارس مدينتي الخاصة ( بنين - بنات )</p>
+                <div class="d-flex align-items-center justify-content-center gap-4">
+                    <p class="h5 p-2">{{ $result->exam->name }}</p> -
+                    <p class="h5 p-2">{{ $student->name }}</p>
+                </div>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            @foreach($result->exam->subject as $index => $subject)
-                                <th>{{ $subject->name }}</th>
-                            @endforeach
-                            <th>المجموع</th>
-                            <th>النسبة المئوية</th>
+                            <th>المواد</th>
+                            <th>الدرجة القصوي</th>
+                            <th>درجة الطالب</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
+                        @foreach($result->exam->subject as $index => $subject)
                             <tr>
-                                {{-- Calculate Total And Precentage --}}
-                                @php 
-                                    $total_marks = $full_mark = 0;
-                                    $subjects = $result->exam->subject->count();
-                                @endphp
-                                @foreach($result->exam->subject as $index => $subject)
-                                    {{-- Subject Mark --}}
-                                    <td>{{ $result->mark[$index]->mark }}</td>
-                                    {{-- Calculate Total --}}
-                                    @php $total_marks += $result->mark[$index]->mark  @endphp
-                                    @php $full_mark += $subject->full_mark  @endphp
-
-                                @endforeach
-                                {{-- Total And Precentage --}}
-                                <td>{{ $total_marks }}</td>
-                                <td>{{ floor(($total_marks / $result->exam->subject->sum('full_mark') * 100) ) }} %</td>
+                                <td>{{ $subject->name }}</td>
+                                <td>{{ $subject->full_mark }}</td>
+                                <td>{{ $result->mark[$index]->mark }}</td>
                             </tr>
-                        </tbody>
-                    </table>      
+                        @endforeach
+                        <tr>
+                            <td colspan="">المجموع</td>
+                            <td colspan="">{{ $subject->sum('full_mark') }}</td>
+                            <td colspan=""> 
+                                @php
+                                    $total_mark = 0;
+                                    foreach($result->mark as $mark) { 
+                                        $total_mark += $mark->mark;
+                                    }
+                                @endphp
+                                {{ $total_mark }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">النسبة</td>
+                            <td colspan=""> 100 % </td>
+                            <td colspan=""> {{ floor(($total_mark / $subject->sum('full_mark')) * 100) }} % </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">التقدير</td>
+                            <td colspan="2">
+                                @php
+                                    $scoring = floor(($total_mark / $subject->sum('full_mark')) * 100);
+                                    $level = '';
+                                    switch ($scoring) {
+                                        case ($scoring >= 90):
+                                                $level = 'ممتاز';
+                                            break;
+                                        case ($scoring <= 89 && $scoring >= 80):
+                                                $level = 'جيد جدا';
+                                            break;
+                                        
+                                        case ($scoring <= 79 && $scoring >= 70):
+                                                $level = 'جيد';
+                                            break;
+                                        case ($scoring <= 69 && $scoring >= 60):
+                                                $level = 'وسط';
+                                            break;
+                                        case ($scoring <= 59 && $scoring >= 50):
+                                                $level = 'مقبول';
+                                            break;
+                                        case ($scoring < 50):
+                                                $level = 'يحتاج مساعدة';
+                                            break;
+                                        default:
+                                                $level;
+                                        break;
+                                    }
+                                @endphp
+                                {{ $level }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">توقيع مرشد الصف</td>
+                            <td colspan="2"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">توقيع المدير</td>
+                            <td colspan="2"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">توقيع ولي الامر</td>
+                            <td colspan="2"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="">ملحوظات</td>
+                            <td colspan="2" class="py-5">
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>      
                     
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 no-print">
                         @permission('Result-update')
                         <a href="{{ route('result.edit', $result->id) }}" class="btn btn-sm btn-warning">تعديل</a>
                         @endpermission

@@ -12,6 +12,9 @@
                         <option value="{{ $school->id }}">{{ $school->name }}</option>
                     @endforeach
                 </select>
+                @error('school_id')
+                    
+                @enderror
             </div>
             {{-- Grade --}}
             <div class="mb-3">

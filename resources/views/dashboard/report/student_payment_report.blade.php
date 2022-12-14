@@ -11,18 +11,21 @@
 
     <div class="container">
         <h1 class="h4 mb-4">سداد الطلاب</h1>
-		<p class="d-flex gap-4">
-			<span class="btn btn-primary">{{ $school->name }}</span>
-			<span class="btn btn-primary">{{ $grade->name ?? 'كل الصفوف' }}</span>
-			<span class="btn btn-primary">{{ $classroom->name ?? 'كل الفصول' }}</span>
+		<p class="d-flex gap-2">
+			<span>{{ $school->name ?? 'كل المدارس' }}</span>
+            -
+			<span>{{ $grade->name ?? 'كل الصفوف' }}</span>
+            -
+			<span>{{ $classroom->name ?? 'كل الفصول' }}</span>
 		</p>
 
 		<table class="table table-bordered bg-white shadow-sm mt-4">
             <thead>
                 <tr>
-                    <th>المبلغ المطلوب</th>
-                    <th>المبلغ المدفوع</th>
-                    <th>المبلغ المتبقي</th>
+                    <th>الرسوم الكلية</th>
+                    <th>المتحصل</th>
+                    <th>باقي التحصيل</th>
+                    <th>نسبة التحصيل</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +33,7 @@
                     <td>{{ number_format(floor($fees[0])) }}</td>
                     <td>{{ number_format(floor($fees[1])) }}</td>
                     <td>{{ number_format(floor($fees[2])) }}</td>
+                    <td>{{ number_format(floor($fees[1]) / floor($fees[0]) * 100) }} %</td>
                 </tr>
             </tbody>
         </table>

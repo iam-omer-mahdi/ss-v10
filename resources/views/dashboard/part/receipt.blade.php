@@ -7,7 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ايصال</title>
     <style>
+        @font-face {
+            font-family: 'Cairo';
+            src: url({{ asset('fonts/Cairo.ttf') }})
+        }
         body {
+            font-family: 'Cairo',sans-serif;
             direction: rtl;
             height: 100vh;
             display: flex;
