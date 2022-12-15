@@ -14,6 +14,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\StudentPartController;
+use App\Http\Controllers\TransportationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,5 +75,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('result', ResultController::class);
     Route::post('result/get_subjects', [ResultController::class, 'get_subjects'])->name('result.get_subjects');    
     Route::get('result_report', [ResultController::class, 'result_report'])->name('result.result_report');    
+    // Transportation
+    Route::get('transportation/add_students/{id}', [TransportationController::class, 'add_students'])->name('transportation.add_students');
+    Route::post('transportation/add_students', [TransportationController::class,'store_students'])->name('transportation.store_students');
+    Route::delete('transportation/add_students/{id}', [TransportationController::class,'destroy_students'])->name('transportation.destroy_students');
+    Route::resource('transportation', TransportationController::class);
 });
 

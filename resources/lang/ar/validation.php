@@ -130,6 +130,7 @@ return [
         'mother_f_phone' => 'هاتف الوالدة',
         'username' => 'اسم المستخدم',
         'password' => 'كلمة المرور',
+        'car_plate' => 'رقم اللوحة',
     ]
 ];
 
