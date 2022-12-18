@@ -43,28 +43,31 @@
             </div>
         </div>
         @role(['super_admin|super_manager|finance_manager|accountant|requireAll'])
-        <div class="table-responsive bg-white mt-4">
-            <table class="table table-default table-bordered border-dark mb-0">
-                <thead>
-                    <tr>
-                        <th>عدد التلاميذ</th>
-                        <th>الرسوم الكلية</th>
-                        <th>المتحصل</th>
-                        <th>باقي التحصيل</th>
-                        <th>نسبة التحصيل</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $students }}</td>
-                        <td>{{ number_format(floor($total_fees)) }}</td>
-                        <td>{{ number_format(floor($paid_fees)) }}</td>
-                        <td>{{ number_format(floor($unpaid_fees)) }}</td>
-                        <td>{{ round(($paid_fees / $total_fees) * 100) }} %</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            @if(isset($total_fees) && $total_fees > 0)
+            <h4 class="h5 mt-4">الرسوم الدراسية</h4>
+            <div class="table-responsive bg-white mt-4">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>عدد التلاميذ</th>
+                            <th>الرسوم الكلية</th>
+                            <th>المتحصل</th>
+                            <th>باقي التحصيل</th>
+                            <th>نسبة التحصيل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $students }}</td>
+                            <td>{{ number_format(floor($total_fees)) }}</td>
+                            <td>{{ number_format(floor($paid_fees)) }}</td>
+                            <td>{{ number_format(floor($unpaid_fees)) }}</td>
+                            <td>{{ round(($paid_fees / $total_fees) * 100) }} %</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            @endif
         @endrole
     </div>
 @endsection

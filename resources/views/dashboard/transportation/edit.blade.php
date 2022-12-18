@@ -40,6 +40,15 @@
                 <small class="text-danger d-inline-block">{{ $message }}</small>
             @enderror
         </div>
+        
+        <div class="mb-3">
+            <label for="fee" class="form-label">رسوم الترحيل</label>
+            <input type="number" min="0" class="form-control my-1" name="fee" id="fee" value="{{ old('fee', $transportation->fee) }}">
+            @error('fee')
+                <small class="text-danger d-inline-block">{{ $message }}</small>
+            @enderror
+        </div>
+
         <button type="submit" class="btn btn-primary w-100">تعديل</button>
     </form>
 </div>

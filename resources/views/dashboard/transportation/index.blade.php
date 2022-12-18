@@ -16,6 +16,7 @@
                     <th>المشرفة</th>
                     <th>هاتف المشرفة</th>
                     <th>رقم اللوحة</th>
+                    <th>الرسوم</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $transportation->supervisor_name }}</td>
                         <td>{{ $transportation->supervisor_phone }}</td>
                         <td>{{ $transportation->car_plate }}</td>
+                        <td>{{ number_format($transportation->fee) }}</td>
                         <td class="d-flex gap-2">
                             <a href="{{ route('transportation.show', $transportation->id) }}" class="btn btn-sm btn-success">عرض</a>
                             <a href="{{ route('transportation.edit', $transportation->id) }}" class="btn btn-sm btn-warning">تعديل</a>
@@ -37,10 +39,7 @@
                     </tr>
                 @empty
                     <tr class="">
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td colspan="4">لايوجد طلاب</td>
                     </tr>
                 @endforelse
             </tbody>

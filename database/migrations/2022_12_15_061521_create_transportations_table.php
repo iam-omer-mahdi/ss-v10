@@ -19,6 +19,7 @@ class CreateTransportationsTable extends Migration
             $table->string('supervisor_name', 255);
             $table->string('supervisor_phone', 255);
             $table->string('car_plate', 255)->unique();
+            $table->integer('fee');
             $table->timestamps();
         });
     }

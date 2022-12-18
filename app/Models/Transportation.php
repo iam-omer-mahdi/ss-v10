@@ -14,6 +14,7 @@ class Transportation extends Model
         'supervisor_name',
         'supervisor_phone',
         'car_plate',
+        'fee',
     ];
 
 }

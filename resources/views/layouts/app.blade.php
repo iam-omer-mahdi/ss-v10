@@ -9,12 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }} @yield('title')</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
+    <link href="{{ asset('css/datatables.bootstrap.css') }}" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'Cairo';
@@ -148,6 +147,9 @@
         </main>
     </div>
     {{-- custom js --}}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
 </body>
 

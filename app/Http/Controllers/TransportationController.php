@@ -29,6 +29,7 @@ class TransportationController extends Controller
             'supervisor_name' => 'required|string:255',
             'supervisor_phone' => 'required|string:255',
             'car_plate' => 'required|string:255|unique:transportations',
+            'fee' => 'required|numeric',
         ]);
 
         Transportation::create([
@@ -36,6 +37,7 @@ class TransportationController extends Controller
             'supervisor_name' => $request->supervisor_name,
             'supervisor_phone' => $request->supervisor_phone,
             'car_plate' => $request->car_plate,
+            'fee' => $request->fee,
         ]);
 
         return redirect()->route('transportation.index')->with('success', 'تمت الاضافة بنجاح');
@@ -59,6 +61,7 @@ class TransportationController extends Controller
             'supervisor_name' => 'required|string:255',
             'supervisor_phone' => 'required|string:255',
             'car_plate' => ['required', 'string:255', Rule::unique('transportations')->ignore($transportation->id)],
+            'fee' => 'required|numeric',
         ]);
 
         $transportation->update([
@@ -66,6 +69,7 @@ class TransportationController extends Controller
             'supervisor_name' => $request->supervisor_name,
             'supervisor_phone' => $request->supervisor_phone,
             'car_plate' => $request->car_plate,
+            'fee' => $request->fee,
         ]);
 
         return redirect()->route('transportation.index')->with('success', 'تم التعديل بنجاح');

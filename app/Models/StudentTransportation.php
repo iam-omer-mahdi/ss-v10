@@ -9,7 +9,7 @@ class StudentTransportation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transportation_id','student_id'];
+    protected $fillable = ['transportation_id', 'student_id', 'fee'];
 
     protected $table = 'student_transportation';
 
