@@ -9,11 +9,16 @@ use Illuminate\Http\Request;
 class StudentTransportationPartController extends Controller
 {
     
-    public function index($id)
+    public function index(Request $request)
     {
-        $student_transportation = StudentTransportation::findOrFail($id);
-        $parts = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->get();
-        return view('dashboard/transportation_part/index', compact('parts'));
+        $student_transportation = StudentTransportation::with('student')->where('student_id', $request->id)->first();
+
+        if (isset($student_transportation->id)) {   
+            $parts = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->get();
+            return view('dashboard/transportation_fee/index', compact('parts','student_transportation'));
+        } else {
+            return redirect()->back()->with('error','الطالب غير موجود في الترحيل');
+        }
     }
 
     public function create()

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Transportation;
 use Illuminate\Validation\Rule;
 use App\Models\StudentTransportation;
+use App\Models\StudentTransportationPart;
 
 class TransportationController extends Controller
 {
@@ -45,8 +46,8 @@ class TransportationController extends Controller
 
     public function show(Transportation $transportation)
     {
-        $students = StudentTransportation::with('student')->where('transportation_id', $transportation->id)->get();
-        return view('dashboard.transportation.show', compact('transportation', 'students'));
+        $studentTransportation = StudentTransportation::with('student')->where('transportation_id', $transportation->id)->get();
+        return view('dashboard.transportation.show', compact('transportation', 'studentTransportation'));
     }
 
     public function edit(Transportation $transportation)
@@ -94,9 +95,14 @@ class TransportationController extends Controller
         $transportation = Transportation::findOrFail($request->transportation_id);
 
         foreach ($request->students as $student) {
-            StudentTransportation::create([
+            $student_transportation = StudentTransportation::create([
                 'student_id' => $student,
                 'transportation_id' => $transportation->id
+            ]);
+            
+            StudentTransportationPart::create([
+                'student_transportation_id' => $student_transportation->id,
+                'amount' => $transportation->fee
             ]);
         }
 

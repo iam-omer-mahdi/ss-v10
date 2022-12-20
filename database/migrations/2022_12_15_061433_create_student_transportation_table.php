@@ -15,8 +15,8 @@ class CreateStudentTransportationTable extends Migration
     {
         Schema::create('student_transportation', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('transportation_id');
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('transportation_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

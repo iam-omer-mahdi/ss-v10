@@ -2,44 +2,39 @@
 
 @section('content')
     <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h1 class="h4">دفع رسوم الترحيل</h1>
-            <span class="d-block mb-4">اسم الطالب</span>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h4 mb-2">دفع رسوم الترحيل</h1>
+                <span class="d-block mb-4 h5">{{ $student_transportation->student->name }}</span>
+            </div>
         </div>
-
-        <a class="btn btn-sm btn-secondary px-4" href="#">رجوع</a>
-    </div>   
 
         <header>
             <div class="row">
-                parts
-                {{-- @foreach($student->grade->grade_fee as $student_fee)
+                @foreach ($parts as $part)
                     <div class="col-6">
                         <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                            <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">{{ $student_fee->fee->name }}</li>
-                            @if($student_fee->fee->type == 2)
-                            <li class="list-group-item border-0 border-bottom col-6 col-md-8"> {{ number_format($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount) }} </li>
-                            @else
-                            <li class="list-group-item border-0 border-bottom col-6 col-md-8"> {{ number_format($student_fee->amount) }} </li>
-                            @endif
+                            <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">رسوم الترحيل</li>
+                            <li class="list-group-item border-0 border-bottom bg-white col-6 col-md-4 rounded-0">{{ $part->amount }}</li>
                         </ul>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
 
             <div class="row">
                 <div class="col-6">
                     <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">الرسوم المتبقية</li>
+                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">
+                            الرسوم المتبقية</li>
                         <li class="list-group-item border-0 border-bottom col-6 col-md-8">
                             {{-- {{ number_format($total_remaining_amount) }} --}}
                         </li>
                     </ul>
-                </div>                
+                </div>
                 <div class="col-6">
                     <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">الرسوم المدفوعة</li>
+                        <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">
+                            الرسوم المدفوعة</li>
                         <li class="list-group-item border-0 border-bottom col-6 col-md-8">
                             {{-- {{ number_format($total_paid_amount) }} --}}
                         </li>
@@ -49,12 +44,12 @@
         </header>
 
         <section class="mt-4">
-            {{-- @foreach($student->student_part as $part)
+            {{-- @foreach ($student->student_part as $part)
                 @if ($part->paid == 0)
             
                 <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
                     <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white d-flex align-items-center">
-                        @if($part->type == 1)
+                        @if ($part->type == 1)
                         دفع رسوم التسجيل
                         @else
                         دفع القسط {{ $part->part_number }} 
@@ -121,13 +116,13 @@
         <section class="mt-4">
             <h2 class="h5 mb-4">الرسوم المدفوعة</h2>
 
-            @foreach($student->student_part as $part)
+            @foreach ($student->student_part as $part)
                 @if ($part->paid == 1)
                     
                 
                 <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
                     <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white d-flex align-items-center">
-                        @if($part->type == 1)
+                        @if ($part->type == 1)
                          رسوم التسجيل
                         @else
                          القسط {{ $part->part_number }} 
@@ -150,15 +145,15 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        @if($part->payment_type == 1)
+                        @if ($part->payment_type == 1)
                             <p> <strong>طريقة الدفع :</strong>  نقدا</p>
                         @endif
-                        @if($part->payment_type == 2)
+                        @if ($part->payment_type == 2)
                             <p class="mb-3"> <strong>طريقة الدفع :</strong>  تحويل بنكي</p>
                             <span class="d-block mb-3">الاشعار :</span>
                             <img src="{{ asset('images/payment/' . $part->payment_image) }}" alt="" width="100%" height="auto">
                         @endif
-                        @if($part->payment_type == 3)
+                        @if ($part->payment_type == 3)
                             <p> <strong>طريقة الدفع :</strong>  شيك</p>
                             <p>رقم الشيك : {{ $part->check_number }}</p>
                             <p>صاحب الشيك : {{ $part->check_owner }}</p>
@@ -170,5 +165,5 @@
                 @endif
             @endforeach --}}
         </section>
-    </div>   
+    </div>
 @endsection

@@ -245,12 +245,12 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($students as $student)
+                @forelse($studentTransportation as $data)
                     <tr>
-                        <td>{{ $student->student->name }}</td>
+                        <td>{{ $data->student->name }}</td>
                         <td class="d-flex justify-content-center gap-1">
-                            <a href="#" class="btn btn-sm btn-success">دفع</a>
-                            <form action="{{ route('transportation.destroy_students', $student->id) }}" method="POST">
+                            <a href="{{ route('transportation_part.index', ['id' => $data->student->id]) }}" class="btn btn-sm btn-success">دفع</a>
+                            <form action="{{ route('transportation.destroy_students', $data->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">حذف من الترحيل</button>
