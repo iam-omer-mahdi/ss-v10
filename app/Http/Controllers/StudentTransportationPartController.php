@@ -13,12 +13,15 @@ class StudentTransportationPartController extends Controller
     {
         $student_transportation = StudentTransportation::with('student')->where('student_id', $request->id)->first();
 
-        if (isset($student_transportation->id)) {   
-            $parts = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->get();
-            return view('dashboard/transportation_fee/index', compact('parts','student_transportation'));
-        } else {
-            return redirect()->back()->with('error','الطالب غير موجود في الترحيل');
-        }
+        if (!isset($student_transportation->id)) {   
+            return redirect()->route('transportation.index')->with('error','الطالب غير موجود في الترحيل');
+        } 
+
+        $parts = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->get();
+        $total_paid_amount = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->where('paid',1)->sum('amount');
+        $total_remaining_amount = StudentTransportationPart::where('student_transportation_id', $student_transportation->id)->where('paid',0)->sum('amount');
+
+        return view('dashboard/transportation_fee/index', compact('parts','student_transportation','total_remaining_amount','total_paid_amount'));
     }
 
     public function create()

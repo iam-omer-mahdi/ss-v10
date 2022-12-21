@@ -121,11 +121,12 @@
                 @foreach ($student->grade->grade_fee as $student_fee)
                     <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
                         <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">
-                            {{ $student_fee->fee->name }}</li>
+                            {{ $student_fee->fee->name }}
+                        </li>
                         @if ($student_fee->fee->type == 2)
                             <li class="list-group-item border-0 border-bottom col-9">
                                 @if ($student->no_payment == 0)
-                                    {{ number_format(floor($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount)) }}
+                                    {{ number_format($student_fee->amount - ($student->discount->amount / 100) * $student_fee->amount) }}
                                 @endif
                             </li>
                         @else
@@ -139,8 +140,7 @@
                 @endforeach
 
                 <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
-                    <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المدفوعة
-                    </li>
+                    <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">الرسوم المدفوعة</li>
                     <li class="list-group-item border-0 border-bottom col-9">
                         @if ($student->no_payment == 0)
                             {{ number_format($total_paid_amount) }}

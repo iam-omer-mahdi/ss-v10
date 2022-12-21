@@ -107,23 +107,8 @@ class StudentPartController extends Controller
     {
         $student = Student::with(['grade.grade_fee','student_part'])->findOrFail($id);
 
-        $total_paid = StudentPart::where('student_id', $student->id)->where('paid', '=', 1)->get();
-        $total_paid_amount = 0;
-        
-        if ($total_paid->count() > 0) {
-            foreach ($total_paid as $paid) {
-                $total_paid_amount = $paid->amount + $total_paid_amount;
-            }
-        }
-
-        $total_remaining = StudentPart::where('student_id', $student->id)->where('paid', '=', 0)->get();
-        $total_remaining_amount = 0;
-        
-        if ($total_remaining->count() > 0) {
-            foreach ($total_remaining as $remaining) {
-                $total_remaining_amount = $remaining->amount + $total_remaining_amount;
-            }
-        }
+        $total_paid_amount = StudentPart::where('student_id', $student->id)->where('paid', 1)->sum('amount');
+        $total_remaining_amount = StudentPart::where('student_id', $student->id)->where('paid', 0)->sum('amount');
 
         return view('dashboard/part/pay', compact(['student','total_remaining_amount','total_paid_amount']));
     }

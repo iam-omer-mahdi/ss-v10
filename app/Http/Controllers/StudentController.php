@@ -116,7 +116,6 @@ class StudentController extends Controller
 
       if (!$request->has('no_payment')) { // check if student is payment free
 
-
         $grade_fee = GradeFee::where('grade_id', $student->grade->id)->whereHas('fee', function ($q) {
           $q->where('type', '=', 2);
         })->first();
@@ -125,7 +124,7 @@ class StudentController extends Controller
           $q->where('type', '=', 1);
         })->first();
 
-        $student_fee = floor($grade_fee->amount - ($student->discount->amount / 100) * $grade_fee->amount);
+        $student_fee = $grade_fee->amount - (($student->discount->amount / 100) * $grade_fee->amount);
 
         // Reg Fee
         StudentPart::create([
@@ -157,6 +156,7 @@ class StudentController extends Controller
           'student_id' => $student->id,
         ]);
       }
+      return $student;
     });
 
     return redirect()->route('student.show', $student->id)->with('success', 'تمت الاضافة بنجاح');
@@ -168,21 +168,8 @@ class StudentController extends Controller
   {
     $student = Student::with(['classroom', 'grade.grade_fee', 'discount', 'nationality', 'guardian_relation'])->findOrFail($id);
 
-    $total_paid = StudentPart::where('student_id', $student->id)->where('paid', '=', 1)->get();
-    $total_paid_amount = 0;
-    if ($total_paid->count() > 0) {
-      foreach ($total_paid as $paid) {
-        $total_paid_amount = $paid->amount + $total_paid_amount;
-      }
-    }
-
-    $total_remaining = StudentPart::where('student_id', $student->id)->where('paid', '=', 0)->get();
-    $total_remaining_amount = 0;
-    if ($total_remaining->count() > 0) {
-      foreach ($total_remaining as $remaining) {
-        $total_remaining_amount = $remaining->amount + $total_remaining_amount;
-      }
-    }
+    $total_paid_amount = StudentPart::where('student_id', $student->id)->where('paid', 1)->sum('amount');
+    $total_remaining_amount = StudentPart::where('student_id', $student->id)->where('paid', 0)->sum('amount');
 
     return view('dashboard/student/show', compact(['student', 'total_paid_amount', 'total_remaining_amount']));
   }
@@ -262,7 +249,7 @@ class StudentController extends Controller
           $q->where('type', '=', 1);
         })->first();
 
-        $student_fee = floor($grade_fee->amount - ($student->discount->amount / 100) * $grade_fee->amount);
+        $student_fee = $grade_fee->amount - ($student->discount->amount / 100) * $grade_fee->amount;
 
         // Reg Fee
         StudentPart::create([

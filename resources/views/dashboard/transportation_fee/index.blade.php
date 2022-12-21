@@ -27,7 +27,7 @@
                         <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">
                             الرسوم المتبقية</li>
                         <li class="list-group-item border-0 border-bottom col-6 col-md-8">
-                            {{-- {{ number_format($total_remaining_amount) }} --}}
+                            {{ number_format($total_remaining_amount) }}
                         </li>
                     </ul>
                 </div>
@@ -36,7 +36,7 @@
                         <li class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">
                             الرسوم المدفوعة</li>
                         <li class="list-group-item border-0 border-bottom col-6 col-md-8">
-                            {{-- {{ number_format($total_paid_amount) }} --}}
+                            {{ number_format($total_paid_amount) }}
                         </li>
                     </ul>
                 </div>
