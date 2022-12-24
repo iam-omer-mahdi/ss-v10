@@ -59,9 +59,9 @@
                     <tbody>
                         <tr>
                             <td>{{ $students }}</td>
-                            <td>{{ number_format(floor($total_fees)) }}</td>
-                            <td>{{ number_format(floor($paid_fees)) }}</td>
-                            <td>{{ number_format(floor($unpaid_fees)) }}</td>
+                            <td>{{ number_format($total_fees) }}</td>
+                            <td>{{ number_format($paid_fees) }}</td>
+                            <td>{{ number_format($unpaid_fees) }}</td>
                             <td>{{ round(($paid_fees / $total_fees) * 100) }} %</td>
                         </tr>
                     </tbody>
@@ -69,5 +69,48 @@
             </div>
             @endif
         @endrole
+
+        <h4 class="h5 mt-4">رسوم الترحيل</h4>
+        <div class="table-responsive bg-white mt-4">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>الرسوم الكلية</th>
+                        <th>المتحصل</th>
+                        <th>باقي التحصيل</th>
+                        <th>نسبة التحصيل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ number_format($transportation_fees['total']) }}</td>
+                        <td>{{ number_format($transportation_fees['paid']) }}</td>
+                        <td>{{ number_format($transportation_fees['unpaid']) }}</td>
+                        <td>{{ round(($transportation_fees['paid'] / $transportation_fees['total']) * 100) }} %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4 class="h5 mt-4">الرسوم الدراسية و رسوم الترحيل</h4>
+        <div class="table-responsive bg-white mt-4">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>الرسوم الكلية</th>
+                        <th>المتحصل</th>
+                        <th>باقي التحصيل</th>
+                        <th>نسبة التحصيل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ number_format($transportation_fees['total'] + $total_fees) }}</td>
+                        <td>{{ number_format($transportation_fees['paid'] + $paid_fees) }}</td>
+                        <td>{{ number_format($transportation_fees['unpaid'] + $unpaid_fees) }}</td>
+                        <td>{{ round((($transportation_fees['paid'] + $paid_fees) / ($transportation_fees['total'] + $total_fees)) * 100) }} %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
