@@ -81,7 +81,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('transportation/add_students', [TransportationController::class,'store_students'])->name('transportation.store_students');
     Route::delete('transportation/add_students/{id}', [TransportationController::class,'destroy_students'])->name('transportation.destroy_students');
     Route::resource('transportation', TransportationController::class);
-    Route::post('transportation_part/store_part', [StudentTransportationPartController::class, 'store_part']);
+    Route::post('transportation_part/store_part', [StudentTransportationPartController::class, 'store_part'])->name('store_part');
+    Route::put('transportation_part/update_part/{id}', [StudentTransportationPartController::class, 'update_part'])->name('update_part');
     Route::resource('transportation_part', StudentTransportationPartController::class);
 });
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\StudentTransportation;
 use App\Models\StudentTransportationPart;
+use Illuminate\Validation\ValidationException;
 
 class StudentTransportationPartController extends Controller
 {
@@ -69,7 +70,7 @@ class StudentTransportationPartController extends Controller
 
         return redirect()->back()->with('success', 'تمت الاضافة بنجاح');
     }
-
+    
     public function show(StudentTransportationPart $studentTransportationPart)
     {
         //
@@ -113,8 +114,49 @@ class StudentTransportationPartController extends Controller
 
     }
 
-    public function destroy(StudentTransportationPart $studentTransportationPart)
+    public function update_part(Request $request, $id)
     {
-        //
+        // dd($request->id);
+        $this->validate($request, [
+            'student_transportation_id' => 'required',
+        ]); 
+
+        $total = StudentTransportationPart::where([
+            ['student_transportation_id', '=', $id],
+        ])->sum('amount');
+        
+        $parts_total = 0;
+
+        foreach ($request->part_number as  $part) {
+            $parts_total += $part;
+        }
+
+        if ($total != $parts_total) {
+            throw ValidationException::withMessages(['part_number' => 'يجب ان يكون المجموع ' . $total]);
+        }
+            
+        foreach ($request->part_id as $index => $part) {
+            StudentTransportationPart::find($part)->update([
+                'amount' => $request->part_number[$index],
+            ]);    
+        }
+
+        return redirect()->back()->with('success','تم التعديل بنجاح');
+    }
+
+    public function destroy($id)
+    {
+        $studentTransportationPart = StudentTransportationPart::findOrFail($id);
+        
+        if ($studentTransportationPart->amount > 0) {
+            return redirect()->back()->with('error','يجب ان تكون قيمة القسط 0 ليتم حذفه ');
+        } else {
+            $studentTransportationPart->delete();
+            return redirect()->back()->with('success','تم حذف القسط بنجاح');
+        }
+
+        $studentTransportationPart->delete();
+
+        return back()->with('success','تم الحذف بنجاح');
     }
 }

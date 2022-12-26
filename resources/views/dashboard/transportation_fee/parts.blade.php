@@ -4,11 +4,11 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h4 mb-4">الاقساط</h1>
-            <a class="btn btn-sm btn-secondary px-4" href="{{ route('transportation_part.index', $student_transportation->student_id) }}">رجوع</a>
+            <a class="btn btn-sm btn-secondary px-4" href="{{ route('transportation_part.index', ['id' => $student_transportation->student_id]) }}">رجوع</a>
         </div>
 
         <div class="d-flex flex-wrap gap-2 mb-4">
-            <form action="{{ route('part.store') }}" method="POST" class="d-flex">
+            <form action="{{ route('store_part') }}" method="POST" class="d-flex">
                 @csrf
                 <input type="hidden" name="student_transportation_id" value="{{ $student_transportation->id }}">
                 <button class="btn btn-sm btn-primary">اضافة قسط</button>
@@ -19,7 +19,7 @@
             <div class="collapse w-100 shadow-sm" id="deletePart">
                 <div class="row bg-white p-2">
                     @foreach($parts as $part)
-                        <form action="{{ route('part.destroy', $part->id) }}" method="POST" class="col-4 mb-2">
+                        <form action="{{ route('transportation_part.destroy', $part->id) }}" method="POST" class="col-4 mb-2">
                             @csrf
                             @method('DELETE')
                             <div class="border p-2 d-flex justify-content-between align-items-center">
@@ -35,7 +35,7 @@
               </div>
         </div>     
         
-        <form action="{{ route('part.update', $student_transportation->id) }}" method="POST" class="card p-4 shadow-sm">
+        <form action="{{ route('update_part', $student_transportation->id) }}" method="POST" class="card p-4 shadow-sm">
             @csrf
             @method('PUT')
             <div class="row">
@@ -46,12 +46,12 @@
                 </div>
                 @endforeach
                 
-                <input type="hidden" name="student_transportation" value="{{ $student_transportation->id }}">
+                <input type="hidden" name="student_transportation_id" value="{{ $student_transportation->id }}">
             </div>
             
             @error('part_number')
                 <small class="text-danger mt-2">
-                    يجب ان يكون المجموع = {{ $parts_total }}
+                    {{ $message }}
                 </small>
             @enderror
 

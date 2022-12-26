@@ -29,7 +29,7 @@ class HomeController extends Controller
         $grades = Grade::count();
         $classrooms = Classroom::count();
         $students = Student::count();
-         
+        
         $total_fees = StudentPart::whereIn('student_id', (Student::select('id')->pluck('id')))->sum('amount');
         $paid_fees = StudentPart::whereIn('student_id', (Student::select('id')->pluck('id')))->where('paid', 1)->sum('amount');
         $unpaid_fees = StudentPart::whereIn('student_id', (Student::select('id')->pluck('id')))->where('paid', 0)->sum('amount');

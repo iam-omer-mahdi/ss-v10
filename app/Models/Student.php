@@ -61,4 +61,11 @@ class Student extends Model
         return $this->hasMany(Result::class);
     }
 
+    protected static function boot() {
+        parent::boot();
+    
+        static::deleted(function ($student) {
+          $student->student_part()->delete();
+        });
+    }
 }
