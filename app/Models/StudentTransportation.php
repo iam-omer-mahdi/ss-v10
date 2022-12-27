@@ -17,4 +17,9 @@ class StudentTransportation extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function parts()
+    {
+        return $this->hasMany(StudentTransportationPart::class);
+    }
 }

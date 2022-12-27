@@ -160,7 +160,6 @@ class StudentController extends Controller
     });
 
     return redirect()->route('student.show', $student->id)->with('success', 'تمت الاضافة بنجاح');
-
   }
 
 

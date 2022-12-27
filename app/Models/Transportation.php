@@ -17,4 +17,9 @@ class Transportation extends Model
         'fee',
     ];
 
+    public function student_transportation ()
+    {
+        return $this->hasMany(StudentTransportation::class);
+    }
+
 }

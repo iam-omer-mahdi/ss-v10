@@ -64,6 +64,17 @@ class TransportationController extends Controller
             'car_plate' => ['required', 'string:255', Rule::unique('transportations')->ignore($transportation->id)],
             'fee' => 'required|numeric',
         ]);
+        
+        // If the fees has changed delete the old transportation_parts and create new ones based on the new fee value
+        if($transportation->fee != $request->fee) {
+            foreach($transportation->student_transportation as $student_transportation){
+                $student_transportation->parts()->delete();
+                $student_transportation->parts()->create([
+                    'student_transportation_id' => $transportation->id,
+                    'amount' => $request->fee
+                ]);
+            }
+        }
 
         $transportation->update([
             'name' => $request->name,
@@ -90,6 +101,7 @@ class TransportationController extends Controller
         return view('dashboard.transportation.add_students', compact('students', 'transportation_id'));
     }
 
+    // Adding Students to the transportation and creating the fee parts
     public function store_students(Request $request)
     {
         $transportation = Transportation::findOrFail($request->transportation_id);
@@ -111,9 +123,9 @@ class TransportationController extends Controller
 
     public function destroy_students($id)
     {
-        $student = StudentTransportation::findOrFail($id);
+        $student_transportation = StudentTransportation::findOrFail($id);
 
-        $student->delete();
+        $student_transportation->delete();
 
         return redirect()->route('transportation.index')->with('success', 'تم الحذف بنجاح');
 
