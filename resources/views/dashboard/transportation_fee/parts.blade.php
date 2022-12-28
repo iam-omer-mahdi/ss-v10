@@ -24,7 +24,7 @@
                             @method('DELETE')
                             <div class="border p-2 d-flex justify-content-between align-items-center">
                                 <p class="mb-0"> {{ number_format($part->amount) }} </p>
-                                <button class="btn btn-sm btn-danger">حذف</button>
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('هل انت متاكد')">حذف</button>
                                 @error('part_amount')
                                     <small class="d-flex w-100 text-danger">{{ $message }}</small>
                                 @enderror

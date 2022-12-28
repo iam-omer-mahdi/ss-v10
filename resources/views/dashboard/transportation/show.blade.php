@@ -253,7 +253,7 @@
                             <form action="{{ route('transportation.destroy_students', $data->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">حذف من الترحيل</button>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل انت متاكد')">حذف من الترحيل</button>
                             </form>
                         </td>
                     </tr>
