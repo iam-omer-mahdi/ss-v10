@@ -12,6 +12,11 @@ use App\Models\StudentTransportationPart;
 class TransportationController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['role:super_admin|finance_manager|super_manager']);
+    }
+
     public function index()
     {
         $transportations = Transportation::all();

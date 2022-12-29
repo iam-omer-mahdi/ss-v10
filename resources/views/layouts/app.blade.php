@@ -75,10 +75,11 @@
                                     <a href="{{ route('result.index') }}" class="nav-link">النتائج</a>
                                 </li>
                             @endrole
-                            
+                            @role(['super_admin','finance_manager','super_manager','requireAll'])
                             <li class="nav-item">
                                 <a href="{{ route('transportation.index') }}" class="nav-link">التراحيل</a>
                             </li>
+                            @endrole
 
                             <form action="{{ route('student.search') }}" method="POST">
                                 @csrf

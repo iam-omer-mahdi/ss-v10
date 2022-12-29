@@ -42,7 +42,7 @@
                 </article>
             </div>
         </div>
-        @role(['super_admin|super_manager|finance_manager|accountant|requireAll'])
+        @role(['super_admin|super_manager|finance_manager|requireAll'])
             
                 <h4 class="h5 mt-4">الرسوم الدراسية</h4>
                 <div class="table-responsive bg-white mt-4">

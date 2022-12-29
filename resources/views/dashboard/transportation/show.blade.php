@@ -222,6 +222,11 @@
 </script>
 @endsection
 
+@php
+    $transportation_crud  = auth()->user()->hasRole(['super_admin|finance_manager']);
+    $transportation_read    = auth()->user()->hasRole(['super_admin|super_manager|finance_manager']);
+@endphp
+
 @section('content')
 <div class="container">
     <header class="d-flex justify-content-between align-items-center mb-3">
@@ -232,7 +237,6 @@
             </ol>
         </nav>
       
-        
         <a href="{{ route('transportation.add_students', $transportation->id) }}" class="btn btn-sm btn-primary">اضافة الطلاب</a>
     </header>
     
@@ -249,12 +253,14 @@
                     <tr>
                         <td>{{ $data->student->name }}</td>
                         <td class="d-flex justify-content-center gap-1">
-                            <a href="{{ route('transportation_part.index', ['id' => $data->student->id]) }}" class="btn btn-sm btn-success">دفع</a>
-                            <form action="{{ route('transportation.destroy_students', $data->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل انت متاكد')">حذف من الترحيل</button>
-                            </form>
+                            <a href="{{ route('transportation_part.index', ['id' => $data->student->id]) }}" class="btn btn-sm btn-success">الرسوم</a>
+                            @if($transportation_crud)
+                                <form action="{{ route('transportation.destroy_students', $data->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل انت متاكد')">حذف من الترحيل</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
