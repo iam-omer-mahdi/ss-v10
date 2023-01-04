@@ -223,8 +223,8 @@
 @endsection
 
 @php
-    $transportation_crud  = auth()->user()->hasRole(['super_admin|finance_manager']);
-    $transportation_read    = auth()->user()->hasRole(['super_admin|super_manager|finance_manager']);
+    $transportation_crud  = auth()->user()->hasRole(['super_admin|transportation_manager']);
+    $transportation_read    = auth()->user()->hasRole(['super_admin|super_manager|finance_manager|transportation_manager']);
 @endphp
 
 @section('content')

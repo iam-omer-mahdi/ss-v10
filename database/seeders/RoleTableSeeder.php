@@ -43,5 +43,11 @@ class RoleTableSeeder extends Seeder
             'display_name' => 'مدير النتائج',
             'description' => 'يستطيع التحكم في نظام النتائج',
         ]);
+        
+        Role::create([
+            'name' => 'transportation_manager',
+            'display_name' => 'مدير التراحيل',
+            'description' => 'يستطيع التحكم في نظام التراحيل',
+        ]);
     }
 }

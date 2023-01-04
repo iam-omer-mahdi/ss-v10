@@ -4,7 +4,7 @@ return [
     /**
      * Control if the seeder should create a user per role while seeding the data.
      */
-    'create_users' => true,
+    'create_users' => false,
 
     /**
      * Control if all the laratrust tables should be truncated before running the seeder.
@@ -27,6 +27,7 @@ return [
             'Subject' => 'c,r,u,d',
             'Role' => 'c,r,u,d',
             'Permission' => 'c,r,u,d',
+            'Transportation' => 'c,r,u,d',
         ],
         'super_manager' => [
             'Student' => 'r',
@@ -40,6 +41,7 @@ return [
             'Exam' => 'r',
             'Mark' => 'r',
             'Subject' => 'r',
+            'Transportation' => 'r',
         ],
         'finance_manager' => [
             'User' => 'c,r,u,d',
@@ -56,6 +58,7 @@ return [
             'Subject' => 'r',
             'Role' => 'c,r,u,d',
             'Permission' => 'c,r,u,d',
+            'Transportation' => 'r',
         ],
         'accountant' => [            
             'Student' => 'c,r,u',
@@ -85,6 +88,14 @@ return [
             'Exam' => 'r',
             'Mark' => 'r',
             'Subject' => 'r',
+        ],
+        'transportation_manager' => [
+            'Student' => 'r',
+            'Classroom' => 'r',
+            'Grade' => 'r',
+            'School' => 'r',
+            'Transportation' => 'c,r,u,d',
+            'StudentTransportation' => 'c,r,u,d'
         ]
     ],
 

@@ -51,6 +51,8 @@
                                     مشرف النتائج
                                 @elseif ($role->name == 'results_reader')
                                     مطلع علي النتائج
+                                @elseif ($role->name == 'transportation_manager')
+                                    مدير التراحيل
                                 @endif
                         </label>
                     </div>

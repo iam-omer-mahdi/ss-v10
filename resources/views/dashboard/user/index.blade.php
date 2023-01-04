@@ -39,6 +39,8 @@
                                     مشرف النتائج
                                 @elseif ($user->roles[0]->name == 'results_reader')
                                     مطلع علي النتائج
+                                @elseif ($user->roles[0]->name == 'transportation_manager')
+                                    مدير التراحيل
                                 @endif
                                     
                              </td>
