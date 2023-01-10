@@ -9,7 +9,7 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container-fluid">
         <h1 class="h4 mb-4">سداد الطلاب</h1>
 		<p class="d-flex gap-2">
 			<span>{{ $school->name ?? 'كل المدارس' }}</span>
@@ -46,6 +46,7 @@
                         <th class="text-start">الصف</th>
                         <th class="text-start">الفصل</th>
                         <th class="text-start">الطالب</th>
+                        <th class="text-start">الهاتف</th>
                         <th class="text-start">اجمالي المبلغ المطلوب</th>
                         <th class="text-start">المدفوع</th>
                         <th class="text-start">المتبقي</th>
@@ -60,6 +61,16 @@
                             <td>{{ $student->grade->name }}</td>
                             <td>{{ $student->classroom->name }}</td>
                             <td>{{ $student->name }}</td>
+                            @if($student->guardian_f_phone || $student->guardian_s_phone || $student->mother_f_phone)
+                                <td class="d-flex gap-2">
+                                    
+                                    @if($student->guardian_f_phone)<span title="هاتف ولي الامر 1" class="p-1 bg-light"> {{ $student->guardian_f_phone }}</span>@endif
+                                    @if($student->guardian_s_phone)<span title="هاتف ولي الامر 2" class="p-1 bg-light"> {{ $student->guardian_s_phone }}</span>@endif
+                                    @if($student->mother_f_phone)<span title="هاتف الوالدة" class="p-1 bg-light"> {{ $student->mother_f_phone }}</span>@endif
+                                </td>
+                            @else
+                                <td>-</td>
+                            @endif
                             <td>
                                 @php 
                                     $total_payment = 0; 
@@ -114,9 +125,17 @@
             let table = $('#data-table').DataTable({
 				dom: 'Bfrtip',
                 buttons: [
-                    'excel', 
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 5 , 6 ,7, 8 ]
+                        },
+                    },
 					{
                         extend: 'print',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 5 , 6 ,7, 8 ]
+                        },
 					customize: function(win) {
 						$(win.document.body).css('direction','rtl')
 						$(win.document.body).find( 'h1' ).css( {'font-size': '2rem','text-align': 'center','margin-bottom': '1.75rem' });

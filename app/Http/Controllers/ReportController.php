@@ -63,7 +63,7 @@ class ReportController extends Controller
         // no school
         if (!$request->has('school') && !$request->has('classroom') && !$request->has('grade')) {             
              
-            $students = Student::select('name','id','classroom_id','discount_id')->with(['grade.school', 'discount', 'classroom', 'student_part'])->orderBy('name')->get();
+            $students = Student::select('name','id','classroom_id','discount_id','guardian_f_phone','guardian_s_phone','mother_f_phone')->with(['grade.school', 'discount', 'classroom', 'student_part'])->orderBy('name')->get();
             foreach ($students as $student) {
                 $student_ids[] = $student->id;
             }
