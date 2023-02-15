@@ -30,7 +30,7 @@
                         @endforeach
                         <tr>
                             <td colspan="">المجموع</td>
-                            <td colspan="">{{ $subject->sum('full_mark') }}</td>
+                            <td colspan="">{{ $result->exam->subject->sum('full_mark') }} </td>
                             <td colspan=""> 
                                 @php
                                     $total_mark = 0;
@@ -44,13 +44,13 @@
                         <tr>
                             <td colspan="">النسبة</td>
                             <td colspan=""> 100 % </td>
-                            <td colspan=""> {{ floor(($total_mark / $subject->sum('full_mark')) * 100) }} % </td>
+                            <td colspan=""> {{ floor(($total_mark / $result->exam->subject->sum('full_mark')) * 100) }} % </td>
                         </tr>
                         <tr>
                             <td colspan="">التقدير</td>
                             <td colspan="2">
                                 @php
-                                    $scoring = floor(($total_mark / $subject->sum('full_mark')) * 100);
+                                    $scoring = floor(($total_mark / $result->exam->subject->sum('full_mark')) * 100);
                                     $level = '';
                                     switch ($scoring) {
                                         case ($scoring >= 90):
