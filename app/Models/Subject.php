@@ -11,4 +11,9 @@ class Subject extends Model
     public $timestamps = true;
     protected $fillable = array('name', 'full_mark', 'success_mark', 'exam_id');
 
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
 }

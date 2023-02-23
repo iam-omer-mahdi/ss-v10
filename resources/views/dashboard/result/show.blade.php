@@ -44,13 +44,13 @@
                         <tr>
                             <td colspan="">النسبة</td>
                             <td colspan=""> 100 % </td>
-                            <td colspan=""> {{ floor(($total_mark / $result->exam->subject->sum('full_mark')) * 100) }} % </td>
+                            <td colspan=""> {{ round(($total_mark / $result->exam->subject->sum('full_mark')) * 100, 1) }} % </td>
                         </tr>
                         <tr>
                             <td colspan="">التقدير</td>
                             <td colspan="2">
                                 @php
-                                    $scoring = floor(($total_mark / $result->exam->subject->sum('full_mark')) * 100);
+                                    $scoring = round(($total_mark / $result->exam->subject->sum('full_mark')) * 100, 1);
                                     $level = '';
                                     switch ($scoring) {
                                         case ($scoring >= 90):

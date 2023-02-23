@@ -50,7 +50,7 @@
                             {{-- Total And Precentage --}}
                             <td class="text-center">{{ $result['total_marks'] }}</td>
                             @if($exam->subject->count() > 0)
-                                <td class="text-center">{{ floor(($result['total_marks'] / $exam->subject->sum('full_mark')) * 100) }} %</td>
+                                <td class="text-center">{{ round(($result['total_marks'] / $exam->subject->sum('full_mark')) * 100, 1) }} %</td>
                             @endif
                         </tr>
                     @endforeach

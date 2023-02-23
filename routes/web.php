@@ -16,6 +16,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\StudentPartController;
 use App\Http\Controllers\TransportationController;
 use App\Http\Controllers\StudentTransportationPartController;
+use App\Http\Controllers\SubjectSuccessRate;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('user/change_password/{id}', [UserController::class, 'update_password'])->name('user.update_password');
     // Exam
     Route::resource('exam', ExamController::class);
+    Route::get('/success_rate/{exam}', [SubjectSuccessRate::class, 'index'])->name('success');
     // Subject
     Route::resource('subject', SubjectController::class);
     // Result
