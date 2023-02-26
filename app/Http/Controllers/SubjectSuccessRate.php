@@ -22,16 +22,16 @@ class SubjectSuccessRate extends Controller
                 array_push($marks, collect($result->mark)->where('subject_id', $subject->id));
             }
 
-            $subject_total_marks = collect($marks)->flatten()->sum('mark');
+            $subject_total_marks = collect($marks)->flatten()->where('mark', '>=',$subject->success_mark)->count();
 
-            $success_rate = round($subject_total_marks / (collect($marks)->flatten()->count() * $subject->full_mark) * 100, 1);
+            $success_rate = round($subject_total_marks / (collect($marks)->flatten()->count()) * 100, 1);
             
-            return [$subject_total_marks, $success_rate];
+            return [round((collect($marks)->flatten()->sum('mark') / collect($marks)->flatten()->count()), 1), $success_rate];
         }
 
         if (count($results) > 0) {   
             foreach ($subjects as  $subject) {
-                array_push($rates, ['name' => $subject->name, 'rate' => calculate_success_rate($results,$subject)[1], 'total_degrees' => calculate_success_rate($results,$subject)[0]]);
+                array_push($rates, ['name' => $subject->name, 'percentage' => calculate_success_rate($results,$subject)[1], 'degrees' => calculate_success_rate($results,$subject)[0]]);
             }
         }
         

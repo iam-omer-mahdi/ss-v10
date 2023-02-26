@@ -28,7 +28,7 @@
                         <td class="d-flex gap-2">
                             @permission('Subject-read')
                                 <a class="btn btn-primary btn-sm" href="{{ route('subject.index', ['id' => $exam->id]) }}">  المواد</a>
-                                <a class="btn btn-primary btn-sm" href="{{ route('success', $exam) }}">  نسب النجاح</a>
+                                {{-- <a class="btn btn-primary btn-sm" href="{{ route('success', $exam) }}">  نسب النجاح</a> --}}
                             @endpermission
                             @permission('Result-create')
                                 <a class="btn btn-primary btn-sm" href="{{ route('create_result', ['id' => $exam->id]) }}"> اضافة النتائج</a>

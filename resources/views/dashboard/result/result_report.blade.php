@@ -6,9 +6,9 @@
 
 @section('content')
     <div class="container-fluid px-4">  
-        <h1 class="h4 mb-4">{{ $exam->grade->school->name ?? '' }} / {{ $exam->grade->name ?? '' }} / {{ $classroom->name ?? 'كل الفصول'}} / {{ $exam->name }}  </h1>
+        <h1 class="h4 mb-4 no-print">{{ $exam->grade->school->name ?? '' }} / {{ $exam->grade->name ?? '' }} / {{ $classroom->name ?? 'كل الفصول'}} / {{ $exam->name }}  </h1>
         
-        <div class="d-flex gap-4">
+        <div class="d-flex gap-4 no-print">
             <label for="scoring">التقدير</label>
             <select name="scoring" id="scoring" class="form-select form-select-sm rounded-0 mb-4">
                 <option @if(Request::query('scoring') == 0) selected @endif value="0">الكل</option>
@@ -28,7 +28,7 @@
           
 
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
-            <table class="table table-default mb-0" id="data-table">
+            <table class="table table-default mb-0" >
                 <thead>
                     <tr>
                         <th class="text-start">الاسم</th>
@@ -55,6 +55,32 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot class="text-center">
+                    <tr>
+                        <td class="text-start">نسبة النجاح</td>
+                        @forelse ($rates as $index => $rate)
+                            <td>{{ $rate['percentage'] }}%</td>
+                        @empty
+                            <td>-</td>
+                        @endforelse
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">عائد التحصيل</td>
+                        @forelse ($rates as $index => $rate)
+                            <td>{{ $rate['degrees'] }}</td>
+                        @empty
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        @endforelse
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>      
         </div>
     </div>
@@ -73,7 +99,7 @@
         $(document).ready(function() {
             
             let table = $('#data-table').DataTable({
-				dom: 'Bfrtip',
+                dom: 'Bfrtip',
                 buttons: [
                     'excel', 
 					{

@@ -71,12 +71,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('user/change_password/{id}', [UserController::class, 'update_password'])->name('user.update_password');
     // Exam
     Route::resource('exam', ExamController::class);
-    Route::get('/success_rate/{exam}', [SubjectSuccessRate::class, 'index'])->name('success');
+    // Route::get('/success_rate/{exam}', [SubjectSuccessRate::class, 'index'])->name('success');
     // Subject
     Route::resource('subject', SubjectController::class);
     // Result
     Route::resource('result', ResultController::class);
-    Route::post('result/get_subjects', [ResultController::class, 'get_subjects'])->name('result.get_subjects');    
+    Route::post('result/get_subjects', [ResultController::class, 'get_subjects'])->name('result.get_subjects');
     Route::get('result_report', [ResultController::class, 'result_report'])->name('result.result_report');    
     // Transportation
     Route::get('transportation/add_students/{id}', [TransportationController::class, 'add_students'])->name('transportation.add_students');
