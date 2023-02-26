@@ -15,15 +15,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($rates as $index => $rate)
-                            <tr>
-                                <td>{{ $rate['name'] }}</td>
-                                <td>{{ $subjects[$index]->full_mark }}</td>
-                                <td>{{ $exam->result->count() }}</td>
-                                <td>{{ $rate['total_degrees'] . '/' . $exam->result->count() * $subjects[$index]->full_mark  }}</td>
-                                <td>{{ $rate['rate'] }}%</td>
-                            </tr>
-                        @endforeach
+                            @forelse ($rates as $index => $rate)
+                                <tr>
+                                    <td>{{ $rate['name'] }}</td>
+                                    <td>{{ $subjects[$index]->full_mark }}</td>
+                                    <td>{{ $exam->result->count() }}</td>
+                                    <td>{{ $rate['total_degrees'] . '/' . $exam->result->count() * $subjects[$index]->full_mark  }}</td>
+                                    <td>{{ $rate['rate'] }}%</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            @endforelse
                     </tbody>
                 </table>
             </div>

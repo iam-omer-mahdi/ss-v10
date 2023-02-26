@@ -29,8 +29,10 @@ class SubjectSuccessRate extends Controller
             return [$subject_total_marks, $success_rate];
         }
 
-        foreach ($subjects as  $subject) {
-            array_push($rates, ['name' => $subject->name, 'rate' => calculate_success_rate($results,$subject)[1], 'total_degrees' => calculate_success_rate($results,$subject)[0]]);
+        if (count($results) > 0) {   
+            foreach ($subjects as  $subject) {
+                array_push($rates, ['name' => $subject->name, 'rate' => calculate_success_rate($results,$subject)[1], 'total_degrees' => calculate_success_rate($results,$subject)[0]]);
+            }
         }
         
         return view('dashboard/result/subject_success_rate', compact('rates','exam','subjects'));
