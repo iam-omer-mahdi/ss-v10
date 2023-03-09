@@ -1,10 +1,12 @@
 <?php
 
 return [
-    'super_admin' => 'المشرف الرئيسي',
-    'super admin' => 'المشرف الرئيسي',
-    'Super Admin' => 'المشرف الرئيسي',
-    'finance_manager' => 'المدير المالي',
+    'super-admin' => 'مشرف رئيسي',
+    'super_admin' => 'مشرف رئيسي',
+    'super_manager' => 'مدير',
+    'finance_manager' => 'مدير مالي',
     'accountant' => 'محاسب',
-    'results_manager' => 'المشرف علي النتائج',
+    'results_manager' => 'مشرف علي النتائج',
+    'results_viewer' => 'مطلع علي النتائج',
+    'transportation_manager' => 'مشرف علي التراحيل',
 ];

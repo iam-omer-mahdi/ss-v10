@@ -15,10 +15,10 @@ class GradeController extends Controller
   // Permissions -------------------
   public function __construct()
   {
-    $this->middleware(['permission:Grade-read'])->only('index');
-    $this->middleware(['permission:Grade-create'])->only(['store','create']);
-    $this->middleware(['permission:Grade-update'])->only(['update','edit']);
-    $this->middleware(['permission:Grade-delete'])->only('destroy');
+    $this->middleware(['can:read_grade'])->only('index');
+    $this->middleware(['can:create_grade'])->only(['store','create']);
+    $this->middleware(['can:update_grade'])->only(['update','edit']);
+    $this->middleware(['can:delete_grade'])->only('destroy');
   }
 
   public function index()

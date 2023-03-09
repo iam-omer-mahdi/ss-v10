@@ -226,23 +226,18 @@
     </script>
 @endsection
 
-@php
-    $grade_update = auth()->user()->isAbleTo('Grade-update');
-    $grade_delete = auth()->user()->isAbleTo('Grade-delete');
-@endphp
-
 @section('content')
     <div class="container">
         <header class="d-flex justify-content-between">
             <h1 class="h5">الصفوف</h1>
-            @permission('Grade-create')
+            @can('Grade-create')
             <a href="{{ route('grade.create') }}" class="btn btn-primary btn-sm">اضافة صف</a>
-            @endpermission
+            @endcan
         </header>
 
         {{-- DataTable  --}}
         <div class="table-responsive mt-4 shadow-sm p-3 bg-white">
-            <table class="table table-default middle-align mb-0">
+            <table class="table table-default shadow-none border-bottom-0 middle-align mb-0 shadow-none">
                 <thead>
                     <tr>
                         <th style="text-align: right">المدرسة</th>
@@ -264,15 +259,15 @@
                                         </svg>
                                     </a>
 
-                                    @if($grade_update)
+                                    @can('update_grade')
                                     <a title="تعديل" href="{{ route('grade.edit', $grade->id) }}" class="btn btn-sm btn-warning">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                     </a>
-                                    @endif
+                                    @endcan
 
-                                    @if($grade_delete)
+                                    @can('delete_grade')
                                     <form action="{{ route('grade.destroy', $grade->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -282,7 +277,7 @@
                                             </svg>
                                         </button>
                                     </form>
-                                    @endif
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

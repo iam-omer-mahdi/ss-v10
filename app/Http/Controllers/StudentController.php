@@ -21,10 +21,10 @@ class StudentController extends Controller
   // Permissions -------------------
   public function __construct()
   {
-    $this->middleware(['permission:Student-read'])->only('index');
-    $this->middleware(['permission:Student-create'])->only(['store', 'create']);
-    $this->middleware(['permission:Student-update'])->only(['update', 'edit']);
-    $this->middleware(['permission:Student-delete'])->only('destroy');
+    $this->middleware(['can:read_student'])->only('index');
+    $this->middleware(['can:create_student'])->only(['store', 'create']);
+    $this->middleware(['can:update_student'])->only(['update', 'edit']);
+    $this->middleware(['can:delete_student'])->only('destroy');
   }
 
   public function index(Request $request)

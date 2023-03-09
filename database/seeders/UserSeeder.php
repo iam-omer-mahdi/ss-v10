@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'super admin',
             'username' => 'super-admin',
             'password' => Hash::make('password')
-        ]);  
+        ]);
 
-        $user->attachRole('super_admin');
+        $user->assignRole('super_admin');
     }
 }

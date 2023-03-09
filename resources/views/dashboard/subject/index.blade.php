@@ -13,7 +13,7 @@
         </div>
 
         <div class="table-responsive shadow-sm bg-white">
-            <table class="table table-default mb-0">
+            <table class="table table-default shadow-none border-bottom-0 mb-0">
                 <thead>
                     <tr>
                         <td>اسم المادة</td>

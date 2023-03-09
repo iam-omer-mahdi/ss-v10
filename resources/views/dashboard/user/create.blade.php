@@ -39,21 +39,7 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="role" id="role_{{ $role->id }}" value="{{ $role->name }}">
                         <label class="form-check-label" for="role_{{ $role->id }}">
-                                @if ($role->name == 'super_admin')
-                                    مشرق رئيسي
-                                @elseif ($role->name == 'super_manager')
-                                    المدير
-                                @elseif ($role->name == 'finance_manager')
-                                    مدير مالي
-                                @elseif ($role->name == 'accountant')
-                                    محاسب
-                                @elseif ($role->name == 'results_manager')
-                                    مشرف النتائج
-                                @elseif ($role->name == 'results_reader')
-                                    مطلع علي النتائج
-                                @elseif ($role->name == 'transportation_manager')
-                                    مدير التراحيل
-                                @endif
+                                {{ __('roles.'.$role->name) }}
                         </label>
                     </div>
                     @endforeach

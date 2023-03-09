@@ -16,7 +16,7 @@
 
     {{-- DataTable --}}
     <div class="table-responsive mt-4 shadow-sm bg-white">
-        <table class="table table-default middle-align mb-0">
+        <table class="table table-default shadow-none border-bottom-0 middle-align mb-0">
             <thead>
                 <tr>
                     <th>الخط</th>

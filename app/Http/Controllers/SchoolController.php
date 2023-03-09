@@ -12,10 +12,10 @@ class SchoolController extends Controller
   // Permissions -------------------
   public function __construct()
   {
-    $this->middleware(['permission:School-read'])->only('index');
-    $this->middleware(['permission:School-create'])->only(['store','create']);
-    $this->middleware(['permission:School-update'])->only(['update','edit']);
-    $this->middleware(['permission:School-delete'])->only('destroy');
+    $this->middleware(['can:read_school'])->only('index');
+    $this->middleware(['can:create_school'])->only(['store','create']);
+    $this->middleware(['can:update_school'])->only(['update','edit']);
+    $this->middleware(['can:delete_school'])->only('destroy');
   }
 
   // School Page with school list
@@ -88,5 +88,3 @@ class SchoolController extends Controller
   }
   
 }
-
-?>

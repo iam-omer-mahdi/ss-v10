@@ -9,7 +9,7 @@ class CreateExamsTable extends Migration {
 	{
 		Schema::create('exams', function(Blueprint $table) {
 			$table->id('id');
-			$table->string('name')->unique();
+			$table->string('name');
 			$table->foreignId('grade_id')->constrained()->onDelete('cascade');
 			$table->timestamps();
 		});

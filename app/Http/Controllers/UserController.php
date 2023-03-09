@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -13,10 +14,10 @@ class UserController extends Controller
       // Permissions -------------------
   public function __construct()
   {
-    $this->middleware(['permission:User-read'])->only('index');
-    $this->middleware(['permission:User-create'])->only(['store','create']);
-    $this->middleware(['permission:User-update'])->only(['update','edit']);
-    $this->middleware(['permission:User-delete'])->only('destroy');
+    $this->middleware(['can:read_user'])->only('index');
+    $this->middleware(['can:create_user'])->only(['store','create']);
+    $this->middleware(['can:update_user'])->only(['update','edit']);
+    $this->middleware(['can:delete_user'])->only('destroy');
   }
 
     public function index()
@@ -55,9 +56,9 @@ class UserController extends Controller
         ]);
 
         if ($request->has('role')) {
-            $user->attachRole($request->role);
+            $user->assignRole($request->role);
         } else {
-            $user->attachRole('accountant');
+            $user->assignRole('accountant');
         }
 
         return redirect()->route('user.index')->with('success','تمت الاضافة بنجاح');

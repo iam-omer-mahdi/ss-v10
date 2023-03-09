@@ -10,10 +10,10 @@ class DiscountController extends Controller
     // Permissions -------------------
     public function __construct()
     {
-        $this->middleware(['permission:Discount-read'])->only('index');
-        $this->middleware(['permission:Discount-create'])->only(['store','create']);
-        $this->middleware(['permission:Discount-update'])->only(['update','edit']);
-        $this->middleware(['permission:Discount-delete'])->only('destroy');
+        $this->middleware(['can:read_discount'])->only('index');
+        $this->middleware(['can:create_discount'])->only(['store','create']);
+        $this->middleware(['can:update_discount'])->only(['update','edit']);
+        $this->middleware(['can:delete_discount'])->only('destroy');
     }
     
     public function index()

@@ -6,7 +6,7 @@
             
         </div>
         <div class="table-responsive bg-white shadow-sm">
-            <table class="table table-default mb-0">
+            <table class="table table-default shadow-none border-bottom-0 mb-0">
                 <thead>
                     <tr>
                         <td>الم</td>

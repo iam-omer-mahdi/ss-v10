@@ -9,7 +9,7 @@
 
         {{-- DataTable --}}
         <div class="table-responsive mt-4 shadow-sm p-3 bg-white">
-            <table class="table table-default middle-align mb-0">
+            <table class="table table-default shadow-none border-bottom-0 middle-align mb-0 shadow-none">
                 <thead>
                     <tr>
                         <th style="text-align: right">التخفيض</th>

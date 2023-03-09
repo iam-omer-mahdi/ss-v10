@@ -18,8 +18,9 @@
             -
 			<span>{{ $classroom->name ?? 'كل الفصول' }}</span>
 		</p>
-
-		<table class="table table-bordered bg-white shadow-sm mt-4">
+        
+		@if($fees[0] > 0 && $fees[1] > 0 && $fees[2] > 0)
+        <table class="table table-bordered bg-white shadow-sm mt-4">
             <thead>
                 <tr>
                     <th>الرسوم الكلية</th>
@@ -37,9 +38,10 @@
                 </tr>
             </tbody>
         </table>
+        @endif
         
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
-            <table class="table table-default mb-0" id="data-table">
+            <table class="table table-default shadow-none border-bottom-0 mb-0" id="data-table">
                 <thead>
                     <tr>
                         <th class="text-start">المدرسة</th>
@@ -55,7 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($students as $student)
+                    @forelse($students as $student)
                         <tr>
                             <td>{{ $student->grade->school->name }}</td>
                             <td>{{ $student->grade->name }}</td>
@@ -106,7 +108,11 @@
                                 {{ $student->discount->amount }} %
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="9">-</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

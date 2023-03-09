@@ -4,7 +4,7 @@
     <div class="container">
         <h1 class="h4 mb-4">احصائيات المدارس</h1>
         <div class="table-responsive bg-white shadow-sm">
-            <table class="table table-default mb-0">
+            <table class="table table-default shadow-none border-bottom-0 mb-0">
                 <thead>
                     <tr>
                         <th>المدرسة</th>

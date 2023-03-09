@@ -26,7 +26,7 @@
                 {{ $student->name }}
             </span>
             <div class="d-flex gap-2">
-                @role('super_admin|accountant|finance_manager')
+                @can('update_student')
                     <a title="تعديل" href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-warning">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
@@ -34,9 +34,9 @@
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                     </a>
-                @endrole
+                @endcan
 
-                @permission('Student-delete')
+                @can('Student-delete')
                     <form action="{{ route('student.destroy', $student->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -49,7 +49,7 @@
                             </svg>
                         </button>
                     </form>
-                @endpermission
+                @endcan
             </div>
         </h1>
 
@@ -108,7 +108,7 @@
                 </li>
                 <li class="list-group-item border-0 border-bottom col-9">{{ $student->mother_s_phone }}</li>
             </ul>
-            @role('super_admin|accountant|finance_manager')
+            @can('read_discount')
                 <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
                     <li class="list-group-item border-0 border-bottom bg-primary col-3 rounded-0 text-white">التخفيض</li>
                     <li class="list-group-item border-0 border-bottom col-9">
@@ -179,6 +179,6 @@
                     </a>
                 </div>
             @endif
-        @endrole
+        @endcan
     </div>
 @endsection

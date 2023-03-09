@@ -28,7 +28,7 @@
           
 
         <div class="table-responsive bg-white shadow-sm px-2 py-4">
-            <table class="table table-default mb-0" >
+            <table class="table table-default shadow-none border-bottom-0 mb-0" >
                 <thead>
                     <tr>
                         <th class="text-start">الاسم</th>
@@ -42,7 +42,7 @@
                 <tbody>
                     @foreach($results as $result)
                         <tr>
-                            <td>{{ $result->student->name }}</td>
+                            <td>{{ $result->student->name ?? '' }}</td>
                             @foreach($result->exam->subject as $index => $subject)
                                 {{-- Subject Mark --}}
                                 <td class="text-center">{{ $result->mark[$index]->mark }}</td>
