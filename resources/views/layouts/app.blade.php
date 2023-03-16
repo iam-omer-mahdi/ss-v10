@@ -12,24 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
     <link href="{{ asset('css/datatables.bootstrap.css') }}" rel="stylesheet">
-    <style>
-        @font-face {
-            font-family: 'Cairo';
-            src: url({{ asset('fonts/Cairo.ttf') }});
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-        }
-
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- Custom css --}}
     @yield('css')
 </head>
@@ -52,10 +36,16 @@
 
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
+                                <a href="{{ route('year.index') }}" class="nav-link">السنوات الدراسية</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('school.index') }}" class="nav-link">المدارس</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('grade.index') }}" class="nav-link">الصفوف</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('registration.index') }}" class="nav-link">تسجيل الطلاب</a>
                             </li>
 
                             @can(['read_discount'])

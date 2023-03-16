@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\YearController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResultController;
@@ -12,11 +13,12 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\SubjectSuccessRate;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\StudentPartController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\TransportationController;
 use App\Http\Controllers\StudentTransportationPartController;
-use App\Http\Controllers\SubjectSuccessRate;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,5 +88,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('transportation_part/store_part', [StudentTransportationPartController::class, 'store_part'])->name('store_part');
     Route::put('transportation_part/update_part/{id}', [StudentTransportationPartController::class, 'update_part'])->name('update_part');
     Route::resource('transportation_part', StudentTransportationPartController::class);
+    // Years
+    Route::resource('year', YearController::class);
+    // registration
+    Route::resource('registration', RegistrationController::class);
+
+
 });
 

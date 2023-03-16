@@ -14,3 +14,10 @@ import Alpine from './alpine'
 window.Alpine = Alpine
  
 Alpine.start()
+
+
+import flatpickr from "flatpickr";
+import { Arabic } from "flatpickr/dist/l10n/ar.js"
+
+import Choices from 'choices.js';
+window.Choices = Choices;

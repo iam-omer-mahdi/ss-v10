@@ -1,1 +1,29 @@
+.dataTables_filter {
+  display: flex;
+}
 
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/Cairo.ttf");
+}
+body {
+  font-family: "Cairo", sans-serif;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+table.dataTable td, table.dataTable th {
+  white-space: nowrap !important;
+}
+
+dt-buttons btn-group {
+  margin-bottom: 1rem;
+}
+
+.choices[data-type*=select-one]::after {
+  right: unset !important;
+  left: 11.5px;
+}

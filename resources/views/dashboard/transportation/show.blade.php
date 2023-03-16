@@ -231,7 +231,7 @@
 <div class="container">
     <header class="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb bg-white">
             <li class="breadcrumb-item"><a href="{{ route('transportation.index') }}" class="text-decoration-none">التراحيل</a></li>
             <li class="breadcrumb-item active text-black" aria-current="page">{{ $transportation->name }}</li>
             </ol>
@@ -241,7 +241,7 @@
     </header>
     
     <div class="table-responsive bg-white p-4">
-        <table class="table table-striped mb-0">
+        <table class="table table-striped mb-0 shadow-none border-bottom-0">
             <thead>
                 <tr>
                     <th class="text-start">اسم الطالب</th>

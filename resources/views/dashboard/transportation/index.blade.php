@@ -24,6 +24,7 @@
                     <th>هاتف المشرفة</th>
                     <th>رقم اللوحة</th>
                     <th>الرسوم</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,8 +49,8 @@
                         </td>
                     </tr>
                 @empty
-                    <tr class="">
-                        <td colspan="4">لايوجد طلاب</td>
+                    <tr>
+                        <td class="text-center" colspan="6">لايوجد طلاب</td>
                     </tr>
                 @endforelse
             </tbody>

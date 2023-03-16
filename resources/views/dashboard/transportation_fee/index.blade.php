@@ -14,7 +14,7 @@
             <div class="row">
                 @foreach ($parts as $part)
                     <div class="col-6">
-                        <ul class="list-group list-group-horizontal border-0 w-100 rounded-0">
+                        <ul class="list-group list-group-horizontal border-0 w-100 rounded-0 bg-white">
                             <li
                                 class="list-group-item border-0 border-bottom bg-primary col-6 col-md-4 rounded-0 text-white">
                                 القسط ({{ $loop->iteration }})</li>

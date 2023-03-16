@@ -1,4 +1,3 @@
-
 @media print {
     table, table th,table td {
         text-align: center;
@@ -7,4 +6,8 @@
     .no-print {
         display: none !important;
     }
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right !important;
 }

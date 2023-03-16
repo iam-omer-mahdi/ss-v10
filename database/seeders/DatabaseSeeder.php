@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         // Student::factory()->count(160)->create();
         $this->call([
-            GuardianRelationSeeder::class,
-            NationalitySeeder::class,
-            DiscountSeeder::class,
-            FeeSeeder::class,
+            // GuardianRelationSeeder::class,
+            // NationalitySeeder::class,
+            // DiscountSeeder::class,
+            // FeeSeeder::class,
             RoleTableSeeder::class,
             UserSeeder::class,
         ]);
